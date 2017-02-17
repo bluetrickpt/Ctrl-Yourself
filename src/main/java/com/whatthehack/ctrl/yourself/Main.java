@@ -1,3 +1,5 @@
+// Initial useless comment
+
 package com.whatthehack.ctrl.yourself;
 
 import javax.swing.JFrame;
