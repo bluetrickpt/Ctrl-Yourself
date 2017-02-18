@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -21,6 +20,7 @@ public class Main extends JFrame {
      *
      */
     public static void main(String[] args) throws IOException {
+
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 //new NativeHookDemo();

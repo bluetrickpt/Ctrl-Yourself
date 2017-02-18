@@ -5,9 +5,12 @@
  */
 package com.whatthehack.ctrl.yourself.game;
 
+import com.whatthehack.ctrl.yourself.sound.SoundManager;
+
 /**
  *
  */
 public class GameManager {
 
+    private SoundManager soundManager;
 }
