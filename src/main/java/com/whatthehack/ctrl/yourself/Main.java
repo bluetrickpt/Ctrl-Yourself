@@ -1,9 +1,8 @@
 package com.whatthehack.ctrl.yourself;
 
-import comms.Client;
-import comms.CommsHelper;
-import comms.Message;
-import comms.Server;
+import com.whatthehack.ctrl.yourself.comms.Client;
+import com.whatthehack.ctrl.yourself.helpers.CommsHelper;
+import com.whatthehack.ctrl.yourself.comms.Server;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package comms;
+package com.whatthehack.ctrl.yourself.helpers;
 
+import com.whatthehack.ctrl.yourself.comms.Message;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
