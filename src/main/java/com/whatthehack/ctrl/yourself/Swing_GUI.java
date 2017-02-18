@@ -5,37 +5,35 @@
  */
 package com.whatthehack.ctrl.yourself;
 
-import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
 
 /**
  *
  * @author Filipe
  */
-public class Swinhg_GUI extends javax.swing.JFrame {
+public class Swing_GUI extends javax.swing.JFrame {
 
     /**
-     * Creates new form Swinhg_GUI
+     * Creates new form Swing_GUI
      */
-    
     Boolean isServer;
     short port;
     Boolean portValidated;
     Boolean nickValidated;
     Boolean ipValidated;
-    
-    public Swinhg_GUI() {
-        
+
+    public Swing_GUI() {
+
         isServer = false;
         portValidated = false;
         nickValidated = false;
         ipValidated = false;
-                
+
         initComponents();
-        
+
         b_startStop.setEnabled(false);
         d_Login.setVisible(true);
-        
+
     }
 
     /**
@@ -221,7 +219,6 @@ public class Swinhg_GUI extends javax.swing.JFrame {
         );
 
         d_HostIP.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        d_HostIP.setMaximumSize(new java.awt.Dimension(460, 232));
         d_HostIP.setMinimumSize(new java.awt.Dimension(460, 232));
         d_HostIP.setResizable(false);
 
@@ -525,19 +522,19 @@ public class Swinhg_GUI extends javax.swing.JFrame {
 
     private void tf_NicknameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_NicknameKeyTyped
         // TODO add your handling code here:
-        if(tf_Nickname.getText().length()>= 15) {  
+        if (tf_Nickname.getText().length() >= 15) {
             evt.consume();
-          }
-        
-        if(tf_Nickname.getText().length() >= 0){
+        }
+
+        if (tf_Nickname.getText().length() >= 0) {
             nickValidated = true;
             t_Nickname.setForeground(Color.green);
-            if(portValidated){
+            if (portValidated) {
                 b_create.setEnabled(true);
                 b_join.setEnabled(true);
-            }  
+            }
         }
-        if(tf_Nickname.getText().length() == 0){
+        if (tf_Nickname.getText().length() == 0) {
             nickValidated = false;
             t_Nickname.setForeground(Color.black);
             b_create.setEnabled(false);
@@ -547,26 +544,26 @@ public class Swinhg_GUI extends javax.swing.JFrame {
 
     private void tf_PortKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_PortKeyTyped
         // TODO add your handling code here:
-        if(tf_Port.getText().length() < 4){
+        if (tf_Port.getText().length() < 4) {
             portValidated = false;
             t_Port.setForeground(Color.black);
             b_create.setEnabled(false);
             b_join.setEnabled(false);
         }
-        if(tf_Port.getText().length() == 3 && Character.isDigit(evt.getKeyChar())){
+        if (tf_Port.getText().length() == 3 && Character.isDigit(evt.getKeyChar())) {
             portValidated = true;
             t_Port.setForeground(Color.green);
-            if(nickValidated){
+            if (nickValidated) {
                 b_create.setEnabled(true);
                 b_join.setEnabled(true);
             }
         }
-        
-        if(!Character.isDigit(evt.getKeyChar()) || tf_Port.getText().length() == 4){
+
+        if (!Character.isDigit(evt.getKeyChar()) || tf_Port.getText().length() == 4) {
             portValidated = true;
             evt.consume();
         }
-        
+
     }//GEN-LAST:event_tf_PortKeyTyped
 
     private void b_joinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_joinActionPerformed
@@ -582,16 +579,15 @@ public class Swinhg_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_b_sendNudesActionPerformed
 
     private void b_startStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_startStopActionPerformed
-        // START/STOP 
-        if("Start".equals(b_startStop.getText())){
+        // START/STOP
+        if ("Start".equals(b_startStop.getText())) {
             b_startStop.setText("Stop");
-        }
-        else{
+        } else {
             setVisible(false);
             d_Login.setVisible(true);
             b_startStop.setText("Start");
         }
-        
+
     }//GEN-LAST:event_b_startStopActionPerformed
 
     private void b_createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_createActionPerformed
@@ -604,15 +600,15 @@ public class Swinhg_GUI extends javax.swing.JFrame {
 
     private void tf_PortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_PortActionPerformed
         // TODO add your handling code here:
-        if(tf_Port.getText().length() == 4){
+        if (tf_Port.getText().length() == 4) {
             portValidated = true;
-            
+
             t_Port.setForeground(Color.green);
-            if(nickValidated){
+            if (nickValidated) {
                 b_create.setEnabled(true);
                 b_join.setEnabled(true);
-            }  
-        }else{
+            }
+        } else {
             portValidated = false;
             b_create.setEnabled(false);
             b_join.setEnabled(false);
@@ -625,43 +621,43 @@ public class Swinhg_GUI extends javax.swing.JFrame {
 
     private void tf_IP1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_IP1KeyTyped
         // TODO add your handling code here:
-        if(!Character.isDigit(evt.getKeyChar()) || tf_IP1.getText().length() == 3){
+        if (!Character.isDigit(evt.getKeyChar()) || tf_IP1.getText().length() == 3) {
             evt.consume();
         }
-        if(tf_IP1.getText().length() == 2 && Character.isDigit(evt.getKeyChar())){
+        if (tf_IP1.getText().length() == 2 && Character.isDigit(evt.getKeyChar())) {
             tf_IP2.requestFocusInWindow();
         }
     }//GEN-LAST:event_tf_IP1KeyTyped
 
     private void tf_IP2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_IP2KeyTyped
         // TODO add your handling code here:
-        
-        if(!Character.isDigit(evt.getKeyChar()) || tf_IP2.getText().length() == 3){
+
+        if (!Character.isDigit(evt.getKeyChar()) || tf_IP2.getText().length() == 3) {
             evt.consume();
         }
-        if(tf_IP2.getText().length() == 2 && Character.isDigit(evt.getKeyChar())){
+        if (tf_IP2.getText().length() == 2 && Character.isDigit(evt.getKeyChar())) {
             tf_IP3.requestFocusInWindow();
         }
     }//GEN-LAST:event_tf_IP2KeyTyped
 
     private void tf_IP3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_IP3KeyTyped
         // TODO add your handling code here:
-        
-        if(!Character.isDigit(evt.getKeyChar()) || tf_IP3.getText().length() == 3){
+
+        if (!Character.isDigit(evt.getKeyChar()) || tf_IP3.getText().length() == 3) {
             evt.consume();
         }
-        if(tf_IP3.getText().length() == 2 && Character.isDigit(evt.getKeyChar())){
+        if (tf_IP3.getText().length() == 2 && Character.isDigit(evt.getKeyChar())) {
             tf_IP4.requestFocusInWindow();
         }
     }//GEN-LAST:event_tf_IP3KeyTyped
 
     private void tf_IP4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_IP4KeyTyped
         // TODO add your handling code here:
-        
-        if(!Character.isDigit(evt.getKeyChar()) || tf_IP4.getText().length() == 3){
+
+        if (!Character.isDigit(evt.getKeyChar()) || tf_IP4.getText().length() == 3) {
             evt.consume();
         }
-        if(tf_IP4.getText().length() == 2 && Character.isDigit(evt.getKeyChar())){
+        if (tf_IP4.getText().length() == 2 && Character.isDigit(evt.getKeyChar())) {
             b_Connnect.setEnabled(true);
         }
     }//GEN-LAST:event_tf_IP4KeyTyped
@@ -685,7 +681,7 @@ public class Swinhg_GUI extends javax.swing.JFrame {
 
     private void tf_NicknameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_NicknameActionPerformed
         // TODO add your handling code here:
-        if(tf_Nickname.getText().length() <= 1){
+        if (tf_Nickname.getText().length() <= 1) {
             nickValidated = false;
             t_Nickname.setForeground(Color.black);
         }
@@ -698,7 +694,7 @@ public class Swinhg_GUI extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -708,20 +704,21 @@ public class Swinhg_GUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Swinhg_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Swing_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Swinhg_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Swing_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Swinhg_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Swing_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Swinhg_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Swing_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Swinhg_GUI().setVisible(false);
+                new Swing_GUI().setVisible(false);
             }
         });
     }
