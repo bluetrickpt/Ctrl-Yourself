@@ -15,6 +15,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -25,12 +26,15 @@ public class Client extends Thread {
     private short socket_port;
     private String server_ip;
     private DatagramSocket socket = null;
+    private String nickname = "";
     Socket clientSocket;
 
-    public Client(String server_ip, short port) {
+    public Client(String server_ip, short port, String nickname) {
         super();
         this.socket_port = port;
         this.server_ip = server_ip;
+        this.nickname = nickname;
+
         start();
     }
 
@@ -39,45 +43,50 @@ public class Client extends Thread {
         try {
             //System.out.println("server_ip=" + server_ip + " port = " + socket_port);
             clientSocket = new Socket(server_ip, socket_port);
+            sendMessage("");//send empty msg so that server adds user
             new ReadStreamThread(clientSocket);
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void sendMessage() {
+    public void sendMessage(String contents) {
         try {
-            CommsHelper.sendMessage(clientSocket, "BluetrickPT");
+            CommsHelper.sendMessage(clientSocket, new Message(getNickname(), contents));
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-//    private class WriteStreamThread extends Thread {
-//
-//        public WriteStreamThread(Socket clientSocket) throws IOException {
-//            DataOutputStream outToServer = new DataOutputStream(
-//                    new DataOutputStream(clientSocket.getOutputStream()));
-//
-//
-//            outToServer.
-//        }
-//    }
+    /**
+     * @return the nickname
+     */
+    public String getNickname() {
+        return nickname;
+    }
+
+    /**
+     * @param nickname the nickname to set
+     */
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
     private class ReadStreamThread extends Thread {
 
-        BufferedReader inFromServer;
+        private Socket socket;
 
-        public ReadStreamThread(Socket clientSocket) throws IOException {
-            inFromServer = new BufferedReader(
-                    new InputStreamReader(clientSocket.getInputStream(), "UTF-16"));
-
+        public ReadStreamThread(Socket socket) {
+            this.socket = socket;
             start();
         }
 
         public void run() {
             while (true) {
                 try {
-                    System.out.println(inFromServer.readLine());
+                    System.out.println(CommsHelper.receiveMessage(socket).toString());
+                } catch (ParseException ex) {
+                    Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
                     Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
                 }

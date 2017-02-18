@@ -5,9 +5,15 @@
  */
 package comms;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.nio.charset.Charset;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -32,15 +38,19 @@ public class CommsHelper {
         port = aPort;
     }
 
-    public static void sendMessage(Socket socket, String message) throws IOException {
-        if (!message.isEmpty()) {
-            if (message.charAt(message.length() - 1) != '\n') {
-                message += '\n';
-            }
-            DataOutputStream outToServer = new DataOutputStream(
-                    new DataOutputStream(socket.getOutputStream()));
-            outToServer.writeChars(message);
-            //System.out.println(socket.getLocalAddress() + " sent: " + message);
-        }
+    public static void sendMessage(Socket socket, Message message) throws IOException {
+
+        DataOutputStream outToServer = new DataOutputStream(
+                new DataOutputStream(socket.getOutputStream()));
+        outToServer.writeUTF(message.toJSONString());
+        //System.out.println("sending: " + message.toJSONString());
     }
+
+    public static Message receiveMessage(Socket socket) throws IOException, ParseException {
+        DataInputStream inputReader = new DataInputStream(socket.getInputStream());
+        String receivedMessage = inputReader.readUTF();
+        //System.out.println("Received: " + receivedMessage);
+        return new Message(receivedMessage);
+    }
+
 }

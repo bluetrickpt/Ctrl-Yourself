@@ -2,6 +2,7 @@ package com.whatthehack.ctrl.yourself;
 
 import comms.Client;
 import comms.CommsHelper;
+import comms.Message;
 import comms.Server;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -10,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -25,16 +27,23 @@ public class Main extends JFrame {
                 //new NativeHookDemo();
                 new Server(CommsHelper.getPort());
                 try {
-                    Client client = new Client(InetAddress.getLocalHost().getHostAddress(), CommsHelper.getPort());
-                    Thread.sleep(1500);
-                    client.sendMessage();
+                    //Thread.sleep(500);
+                    Client client = new Client(InetAddress.getLocalHost().getHostAddress(), CommsHelper.getPort(), "User1");
+                    Client client2 = new Client(InetAddress.getLocalHost().getHostAddress(), CommsHelper.getPort(), "User2");
+                    Thread.sleep(100); //Required...
+                    client.sendMessage("Hola");
+                    //Thread.sleep(5000);
+                    client.sendMessage("Hola");
+                    client.sendMessage("Hola");
+                    client2.sendMessage("A todos");
+                    client.sendMessage("Hola");
+                    client.sendMessage("Hola");
+                    client.sendMessage("Hola");
 
-                    Client client2 = new Client(InetAddress.getLocalHost().getHostAddress(), CommsHelper.getPort());
-                    Thread.sleep(500);
-                    client2.sendMessage();
-                } catch (UnknownHostException ex) {
+                    //Client client2 = new Client(InetAddress.getLocalHost().getHostAddress(), CommsHelper.getPort(), "User2");
+                } catch (UnknownHostException | InterruptedException ex) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InterruptedException ex) {
+                } catch (IOException ex) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
