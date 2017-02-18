@@ -13,15 +13,14 @@ package com.whatthehack.ctrl.yourself.game;
 public class Challenge {
 
     
-    
     private String title;
     private String description;
-    private String nickname;
+    private String sound;
     
-    public Challenge(String title, String description, String nickname) {
+    public Challenge(String title, String description, String sound) {
         this.title = title;
         this.description = description;
-        this.nickname = nickname;
+        this.sound = sound;
     }
     
     
@@ -41,18 +40,16 @@ public class Challenge {
         this.description = description;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getSound() {
+        return sound;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setSound(String sound) {
+        this.sound = sound;
     }
-    
-    
     @Override
     public String toString(){
-        return(title + " " + description + " " +  nickname);
+        return(title + " " + description + " " +  sound);
     }
     
     

@@ -20,7 +20,7 @@ public class Main extends JFrame {
      *
      */
     public static void main(String[] args) throws IOException {
-        startGUI();
+        //       startGUI();
 //        SwingUtilities.invokeLater(new Runnable() {
 //            public void run() {
 //                //new NativeHookDemo();
@@ -49,6 +49,7 @@ public class Main extends JFrame {
 //        });
 //
 //        System.in.read();
+        GameManager gameManager = new GameManager();
     }
 
     public static void startGUI() {

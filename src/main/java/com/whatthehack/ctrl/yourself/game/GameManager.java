@@ -21,7 +21,7 @@ public class GameManager {
 
     
     public GameManager() throws IOException {
-        defaultChallenges.add(new Challenge("yellow", "Sing yellow from coldplay", "yellowKaraoke.wav"));
+        defaultChallenges.add(new Challenge("yellow", "Sing yellow from coldplay",  "yellowKaraoke.wav"));
         defaultChallenges.add(new Challenge("yellow", "Sing toy", "toyKaraoke.wav"));
         activeChallenges = FilesHelper.readCSVFileChallenges(challengeFile,defaultChallenges);
         System.out.println(activeChallenges);

@@ -39,7 +39,7 @@ public class FilesHelper {
                 while ((line = fileReader.readLine()) != null) {
                     String[] tokens = line.split(COMMA_DELIMITER);
                     if (tokens.length > 0) {
-                    challengeArray.add(new Challenge(tokens[0], tokens[1], tokens[2] ));
+                    challengeArray.add(new Challenge(tokens[0], tokens[1], tokens[2]));
                     }
                 }
             }catch (FileNotFoundException e) {
@@ -72,9 +72,9 @@ public class FilesHelper {
             for (int i = 0; i < challengeArray.size(); i++) {
                 fileWriter.append(challengeArray.get(i).getTitle());
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(challengeArray.get(i).getDescription());             
+                fileWriter.append(challengeArray.get(i).getDescription());                   
                 fileWriter.append(COMMA_DELIMITER);               
-                fileWriter.append(challengeArray.get(i).getNickname());               
+                fileWriter.append(challengeArray.get(i).getSound());  
                 fileWriter.append("\n");
             }
         }catch (IOException e) {
