@@ -5,9 +5,24 @@
  */
 package com.whatthehack.ctrl.yourself.game;
 
+import com.whatthehack.ctrl.yourself.helpers.FilesHelper;
+import java.io.IOException;
+import java.util.ArrayList;
+
 /**
  *
  */
 public class GameManager {
+    public String challengeFile = "challenges.csv";
+    public static ArrayList<Challenge> defaultChallenges = new ArrayList<>();
+    public static ArrayList<Challenge> activeChallenges =  new ArrayList<>();
+    
+    
+    public GameManager() throws IOException {
+        defaultChallenges.add(new Challenge("yellow", "Sing yellow from coldplay", "yellowKaraoke.wav"));
+        defaultChallenges.add(new Challenge("yellow", "Sing toy", "toyKaraoke.wav"));
+        activeChallenges = FilesHelper.readCSVFileChallenges(challengeFile,defaultChallenges);
+        System.out.println(activeChallenges);
 
+    }
 }
