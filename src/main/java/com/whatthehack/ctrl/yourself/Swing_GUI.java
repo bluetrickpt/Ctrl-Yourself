@@ -91,6 +91,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         d_Login.setAlwaysOnTop(true);
         d_Login.setLocationByPlatform(true);
         d_Login.setMinimumSize(new java.awt.Dimension(777, 508));
+        d_Login.setResizable(false);
 
         p_buttons.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -152,7 +153,9 @@ public class Swing_GUI extends javax.swing.JFrame {
         t_Nickname.setText("Nickname:");
 
         t_Port.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        t_Port.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         t_Port.setText("Port:");
+        t_Port.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         tf_Port.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         tf_Port.addActionListener(new java.awt.event.ActionListener() {
@@ -172,9 +175,10 @@ public class Swing_GUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(t_Port, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(t_Port, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(tf_Port, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -219,6 +223,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         );
 
         d_HostIP.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        d_HostIP.setMaximumSize(new java.awt.Dimension(460, 232));
         d_HostIP.setMinimumSize(new java.awt.Dimension(460, 232));
         d_HostIP.setResizable(false);
 
@@ -528,7 +533,7 @@ public class Swing_GUI extends javax.swing.JFrame {
 
         if (tf_Nickname.getText().length() >= 0) {
             nickValidated = true;
-            t_Nickname.setForeground(Color.green);
+            t_Nickname.setForeground(Color.blue);
             if (portValidated) {
                 b_create.setEnabled(true);
                 b_join.setEnabled(true);
@@ -552,7 +557,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         }
         if (tf_Port.getText().length() == 3 && Character.isDigit(evt.getKeyChar())) {
             portValidated = true;
-            t_Port.setForeground(Color.green);
+            t_Port.setForeground(Color.blue);
             if (nickValidated) {
                 b_create.setEnabled(true);
                 b_join.setEnabled(true);
@@ -603,7 +608,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         if (tf_Port.getText().length() == 4) {
             portValidated = true;
 
-            t_Port.setForeground(Color.green);
+            t_Port.setForeground(Color.blue);
             if (nickValidated) {
                 b_create.setEnabled(true);
                 b_join.setEnabled(true);
@@ -686,42 +691,6 @@ public class Swing_GUI extends javax.swing.JFrame {
             t_Nickname.setForeground(Color.black);
         }
     }//GEN-LAST:event_tf_NicknameActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Swing_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Swing_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Swing_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Swing_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Swing_GUI().setVisible(false);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_Connnect;
