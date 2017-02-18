@@ -22,34 +22,34 @@ public class Main extends JFrame {
     public static void main(String[] args) throws IOException {
 
         startGUI();
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                //new NativeHookDemo();
-                new Server(CommsHelper.getPort());
-                try {
-                    //Thread.sleep(500);
-                    Client client = new Client(InetAddress.getLocalHost().getHostAddress(), CommsHelper.getPort(), "User1");
-                    Client client2 = new Client(InetAddress.getLocalHost().getHostAddress(), CommsHelper.getPort(), "User2");
-                    Thread.sleep(100); //Required...
-                    client.sendMessage("Hola");
-                    //Thread.sleep(5000);
-                    client.sendMessage("Hola");
-                    client.sendMessage("Hola");
-                    client2.sendMessage("A todos");
-                    client.sendMessage("Hola");
-                    client.sendMessage("Hola");
-                    client.sendMessage("Hola");
-
-                    //Client client2 = new Client(InetAddress.getLocalHost().getHostAddress(), CommsHelper.getPort(), "User2");
-                } catch (UnknownHostException | InterruptedException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-
-        System.in.read();
+//        SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                //new NativeHookDemo();
+//                new Server(CommsHelper.getPort());
+//                try {
+//                    //Thread.sleep(500);
+//                    Client client = new Client(InetAddress.getLocalHost().getHostAddress(), CommsHelper.getPort(), "User1");
+//                    Client client2 = new Client(InetAddress.getLocalHost().getHostAddress(), CommsHelper.getPort(), "User2");
+//                    Thread.sleep(100); //Required...
+//                    client.sendMessage("Hola");
+//                    //Thread.sleep(5000);
+//                    client.sendMessage("Hola");
+//                    client.sendMessage("Hola");
+//                    client2.sendMessage("A todos");
+//                    client.sendMessage("Hola");
+//                    client.sendMessage("Hola");
+//                    client.sendMessage("Hola");
+//
+//                    //Client client2 = new Client(InetAddress.getLocalHost().getHostAddress(), CommsHelper.getPort(), "User2");
+//                } catch (UnknownHostException | InterruptedException ex) {
+//                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (IOException ex) {
+//                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//        });
+//
+//        System.in.read();
     }
 
     public static void startGUI() {
