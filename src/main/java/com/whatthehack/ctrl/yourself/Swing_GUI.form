@@ -204,10 +204,17 @@
     </Container>
     <Container class="javax.swing.JDialog" name="d_HostIP">
       <Properties>
+        <Property name="defaultCloseOperation" type="int" value="2"/>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[460, 232]"/>
+          <Dimension value="[460, 246]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[460, 246]"/>
         </Property>
         <Property name="resizable" type="boolean" value="false"/>
+        <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[460, 246]"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="d_HostIPKeyTyped"/>
@@ -234,6 +241,11 @@
       </Layout>
       <SubComponents>
         <Container class="javax.swing.JPanel" name="p_HostIP">
+          <Properties>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[479, 235]"/>
+            </Property>
+          </Properties>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -265,7 +277,7 @@
                       <Component id="b_Connect" min="-2" pref="67" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="t_ConnectionWarning" min="-2" pref="20" max="-2" attributes="0"/>
-                      <EmptySpace pref="19" max="32767" attributes="0"/>
+                      <EmptySpace pref="30" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

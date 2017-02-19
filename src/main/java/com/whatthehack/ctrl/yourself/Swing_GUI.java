@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
+import javax.swing.InputVerifier;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
@@ -52,6 +53,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         this.gameManager = gameManager;
 
         initComponents();
+        
 
         java.awt.event.WindowAdapter close_handler = new java.awt.event.WindowAdapter() {
             @Override
@@ -64,7 +66,13 @@ public class Swing_GUI extends javax.swing.JFrame {
                 }
             }
         };
-
+        
+        
+        tf_IP1.setInputVerifier(new StrictInputVerifier("IP"));
+        tf_IP2.setInputVerifier(new StrictInputVerifier("IP"));
+        tf_IP3.setInputVerifier(new StrictInputVerifier("IP"));
+        tf_IP4.setInputVerifier(new StrictInputVerifier("IP"));
+        
         this.addWindowListener(close_handler);
         d_Login.addWindowListener(close_handler);
         d_Login.setVisible(true);
@@ -265,13 +273,18 @@ public class Swing_GUI extends javax.swing.JFrame {
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
-        d_HostIP.setMinimumSize(new java.awt.Dimension(460, 232));
+        d_HostIP.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        d_HostIP.setMinimumSize(new java.awt.Dimension(460, 246));
+        d_HostIP.setPreferredSize(new java.awt.Dimension(460, 246));
         d_HostIP.setResizable(false);
+        d_HostIP.setSize(new java.awt.Dimension(460, 246));
         d_HostIP.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 d_HostIPKeyTyped(evt);
             }
         });
+
+        p_HostIP.setMinimumSize(new java.awt.Dimension(479, 235));
 
         b_Connect.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         b_Connect.setText("Connect");
@@ -400,7 +413,7 @@ public class Swing_GUI extends javax.swing.JFrame {
                 .addComponent(b_Connect, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(t_ConnectionWarning, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout d_HostIPLayout = new javax.swing.GroupLayout(d_HostIP.getContentPane());
@@ -897,32 +910,41 @@ public class Swing_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_d_HostIPKeyTyped
 
     
-    private class InputVerifier {
-        private String validate;
+    private class StrictInputVerifier extends InputVerifier {
+        private String option;
 
-        public InputVerifier(String validate) {
-            this.validate = validate;
+        public StrictInputVerifier(String option) {
+            this.option = option;
         }
 
-        public boolean verifyIPSingle(JComponent input) {
+        public boolean verify(JComponent input) {
             JTextField textField = (JTextField) input;
-            
-            switch(validate){
-                case "IPSingle":
-                    /*try(){
-                        
-                    }catch(){
-                        
+            String str = textField.getText();
+            switch(option){
+                case "IP":
+                    try{
+                        int parseInt = Integer.parseInt(str);
+                    }catch(NumberFormatException e){
+                        return false;
                     }
+                    if(str.length() <= 3)
                         return true;
-                    break;*/
-                case "IPComplete":
-                    
-                    break;
+                    return false;
+                case "Port":
+                    try{
+                        int parseInt = Integer.parseInt(str);
+                    }catch(NumberFormatException e){
+                        return false;
+                    }
+                    if(str.length() == 4)
+                        return true;
+                case "NickName":
+                    if(str.length() <= 15 && str.length() >= 1)
+                        return true;
+                    return false;
                 default:  
                     return false;
             }
-            return false;
         }
     }
     
