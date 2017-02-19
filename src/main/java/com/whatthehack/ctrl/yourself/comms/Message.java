@@ -26,6 +26,9 @@ public class Message {
     public static final int CHALLENGE_MESSAGE = 2;
     public static final int NEW_MEMBER_MESSAGE = 3;
 
+    private static final String SYSTEM_FONT_SIZE = "20";
+    private static final String USER_FONT_SIZE = "16";
+
     public Message(String nickname, String content, int code) {
         this.nickname = nickname;
         this.content = content;
@@ -105,10 +108,11 @@ public class Message {
                 gameManager.addUser(receivedMessage.getNickname());
             //No break, since NEW_MEMBER_MESSAGE is also a SYSTEM_MESSAGE
             case SYSTEM_MESSAGE:
-                result = "*** " + receivedMessage.getContent() + " ***";
+                result = "<html><b><span style=\"font-size:" + SYSTEM_FONT_SIZE + ";\">*** " + receivedMessage.getContent() + " ***</span></b></html>";
                 break;
             case USER_MESSAGE:
-                result = receivedMessage.getNickname() + ": " + receivedMessage.getContent();
+                result = "<html><b><span style=\"font-size:" + USER_FONT_SIZE + ";\">" + receivedMessage.getNickname() + ": " + receivedMessage.getContent() + "</span></b></html>";
+                ;
                 break;
             case CHALLENGE_MESSAGE:
                 //TODO
