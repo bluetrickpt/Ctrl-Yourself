@@ -122,7 +122,7 @@ public class Message {
 
                 break;
             case CHALLENGE_MESSAGE:
-                //TODO
+                result = "<html><b><span style=\"color:red; font-size:" + USER_FONT_SIZE + ";\">Heads up! " + receivedMessage.getContent() + "</span></b></html>";
                 break;
             case UPDATE_USER_LIST_MESSAGE:
                 initUsersFromString(receivedMessage.getContent(), gameManager);
@@ -133,6 +133,7 @@ public class Message {
                 break;
             case USER_LEAVING_MESSAGE:
                 result = "<html><b><span style=\"font-size:" + SYSTEM_FONT_SIZE + ";\">*** " + clientLeavingString(receivedMessage.getNickname()) + " ***</span></b></html>";
+                System.out.println(result);
                 break;
             default:
                 throw new RuntimeException("Invalid entry");
@@ -153,6 +154,8 @@ public class Message {
     }
 
     public static void initUsersFromString(String jsonArrayUsers, GameManager gameManager) {
+        //System.out.print("initializing: " + jsonArrayUsers);
+        gameManager.restartUsers();
         String[] users = jsonArrayUsers.split(USERS_DELIMITER);
         for (int i = 0; i < users.length; ++i) {
             gameManager.addUser(users[i]);

@@ -61,19 +61,22 @@ public class Swing_GUI extends javax.swing.JFrame {
                 if (server != null) {
                     //server.sendShutdownMessage(); //TODO
                     server.handleServerClosing();
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(Swing_GUI.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    dispose();
-                    System.exit(0);
+
                 }
 
                 Client client = gameManager.getClient();
                 if (client != null) {
                     client.handleClosing();
+
                 }
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Swing_GUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                dispose();
+                System.exit(0);
             }
         };
         
@@ -89,6 +92,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         d_Login.setVisible(true);
         gameManager.setInputMessageField(tf_message);
         gameManager.setChallengePopup(jLabel1, jLabel2, d_Challenge);
+        gameManager.setSendButton(b_sendNudes);
     }
 
     /**
@@ -917,6 +921,7 @@ public class Swing_GUI extends javax.swing.JFrame {
 
     private void mi_muteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_muteActionPerformed
         // TODO add your handling code here:
+        gameManager.setMute(mi_mute.getState());
     }//GEN-LAST:event_mi_muteActionPerformed
 
     private void d_HostIPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_d_HostIPKeyTyped
