@@ -19,31 +19,30 @@ import java.util.ArrayList;
  *
  */
 public class FilesHelper {
-    
+
     //Delimiter used in CSV file
     private static final String COMMA_DELIMITER = "&";
-    
-    
-    public static ArrayList<Challenge> readCSVFileChallenges(String fileName, ArrayList<Challenge> defaultChallenges) throws IOException{
+
+    public static ArrayList<Challenge> readCSVFileChallenges(String fileName, ArrayList<Challenge> defaultChallenges) throws IOException {
         ArrayList<Challenge> challengeArray = new ArrayList<>();
         File file = new File(fileName);
-        if(file.isFile()){  
-            
+        if (file.isFile()) {
+
             System.out.println("File exists");
             FileInputStream fileInStream = new FileInputStream(file);
-            BufferedReader fileReader = null;  
+            BufferedReader fileReader = null;
 
             try {
                 fileReader = new BufferedReader(new InputStreamReader(fileInStream));
-                String line =null;
+                String line = null;
                 while ((line = fileReader.readLine()) != null) {
                     String[] tokens = line.split(COMMA_DELIMITER);
                     if (tokens.length > 0) {
-                    challengeArray.add(new Challenge(tokens[0], tokens[1], tokens[2]));
+                        challengeArray.add(new Challenge(tokens[0], tokens[1], tokens[2]));
                     }
                 }
-            }catch (FileNotFoundException e) {
-                  System.out.println("Error in CsvFileReader !!!");
+            } catch (FileNotFoundException e) {
+                System.out.println("Error in CsvFileReader !!!");
             } catch (IOException e) {
                 System.out.println("Error in CsvFileReader !!!");
             } finally {
@@ -55,29 +54,28 @@ public class FilesHelper {
                     }
                 }
             }
-        }else{
+        } else {
             challengeArray = defaultChallenges;
-            writeCSVFileChallenges(defaultChallenges, fileName);            
+            writeCSVFileChallenges(defaultChallenges, fileName);
         }
-        return(challengeArray);
+        return (challengeArray);
     }
-    
-    
-    public static void writeCSVFileChallenges(ArrayList<Challenge> challengeArray, String fileName){
-       
+
+    public static void writeCSVFileChallenges(ArrayList<Challenge> challengeArray, String fileName) {
+
         FileWriter fileWriter = null;
-        try{
+        try {
             fileWriter = new FileWriter(fileName);
 
             for (int i = 0; i < challengeArray.size(); i++) {
                 fileWriter.append(challengeArray.get(i).getTitle());
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(challengeArray.get(i).getDescription());                   
-                fileWriter.append(COMMA_DELIMITER);               
-                fileWriter.append(challengeArray.get(i).getSound());  
+                fileWriter.append(challengeArray.get(i).getDescription());
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(challengeArray.get(i).getSound());
                 fileWriter.append("\n");
             }
-        }catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("Error in CsvFileWriter !!!");
         } finally {
             try {
@@ -87,9 +85,6 @@ public class FilesHelper {
                 System.out.println("Error while flushing/closing fileWriter !!!");
             }
         }
-
-         
     }
+
 }
-
-
