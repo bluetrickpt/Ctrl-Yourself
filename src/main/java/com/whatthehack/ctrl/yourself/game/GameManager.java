@@ -71,7 +71,6 @@ public class GameManager {
     }
 
     public void addUser(String nickname) {
-        //users.add(nickname);
         users.addElement(nickname);
         l_users.setModel(users);
     }
