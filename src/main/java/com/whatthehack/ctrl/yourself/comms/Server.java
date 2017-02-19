@@ -91,6 +91,9 @@ public class Server extends Thread {
                     if (gotMessage.getCode() == Message.USER_LEAVING_MESSAGE) {
                         gameManager.removeUserFromList(gotMessage.getNickname());
                         usersString = gameManager.getActiveUsersNicknames();
+                        clientSockets2Nicknames.remove(clientSocket);
+                        clientSocket.close();
+                        new Broadcast(clientSockets2Nicknames, new Message(clientNick, "", Message.USER_LEAVING_MESSAGE));
                         new Broadcast(clientSockets2Nicknames, new Message("", usersString, Message.UPDATE_USER_LIST_MESSAGE));
                     } else {
                         new Broadcast(clientSockets2Nicknames, gotMessage);
@@ -119,6 +122,11 @@ public class Server extends Thread {
         public Broadcast(HashMap<Socket, String> targets, Message message) {
             this.targets = targets;
             this.toSendMessage = message;
+
+            if (Message.UPDATE_USER_LIST_MESSAGE == message.getCode()) {
+                System.out.println("Here");
+            }
+
             start();
         }
 

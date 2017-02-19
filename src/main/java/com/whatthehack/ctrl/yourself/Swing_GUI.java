@@ -61,19 +61,22 @@ public class Swing_GUI extends javax.swing.JFrame {
                 if (server != null) {
                     //server.sendShutdownMessage(); //TODO
                     server.handleServerClosing();
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(Swing_GUI.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    dispose();
-                    System.exit(0);
+
                 }
 
                 Client client = gameManager.getClient();
                 if (client != null) {
                     client.handleClosing();
+
                 }
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Swing_GUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                dispose();
+                System.exit(0);
             }
         };
 
@@ -82,6 +85,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         d_Login.setVisible(true);
         gameManager.setInputMessageField(tf_message);
         gameManager.setChallengePopup(jLabel1, jLabel2, d_Challenge);
+        gameManager.setSendButton(b_sendNudes);
     }
 
     /**

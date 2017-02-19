@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import javax.swing.JTextArea;
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -52,6 +53,11 @@ public class GameManager {
     private JDialog challengeDialog;
     private JLabel challengeTitle;
     private JLabel challengeDesc;
+    private JButton sendButton;
+
+    public void setSendButton(JButton sendButton) {
+        this.sendButton = sendButton;
+    }
 
     private JTextField inputMessageField;
 
@@ -158,15 +164,20 @@ public class GameManager {
     }
 
     public void disableMessages() {
-        inputMessageField.setText("Server shutdown. You are disconnected. Please restart client to connect again");
+        inputMessageField.setText("Server shutdown. You are disconnected. Please restart client to connect again.");
         inputMessageField.setEnabled(false);
+        sendButton.setEnabled(false);
     }
 
     public void removeUserFromList(String nickname) {
         ArrayList<String> activeUsers = Collections.list(users.elements());
+        System.out.println("Trying to remove " + nickname);
         for (int i = 0; i < activeUsers.size(); ++i) {
-            if (activeUsers.get(i) == nickname) {
+            System.out.println("active user = " + activeUsers.get(i));
+            if (activeUsers.get(i).equals(nickname)) {
                 users.remove(i);
+                //userListWindow.setModel(users);
+                System.out.println("removed user" + activeUsers.get(i));
                 return;
             }
         }
@@ -201,5 +212,10 @@ public class GameManager {
 
         soundManager.playSound(newChallenge.getSound());
 
+    }
+
+    public void restartUsers() {
+        users = new DefaultListModel();
+        chatWindow.setModel(messages);
     }
 }
