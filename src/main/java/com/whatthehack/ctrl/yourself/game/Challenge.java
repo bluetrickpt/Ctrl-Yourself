@@ -46,6 +46,7 @@ public class Challenge {
     }
 
     public String getSound() {
+        System.out.println(sound);
         return sound;
     }
 
@@ -103,7 +104,7 @@ public class Challenge {
         defaultChallenges.add(new Challenge("Bing mistake.", "Set your default search engine to Bing.", null));
         defaultChallenges.add(new Challenge("Iron abs.", "Show the world you can do Math, do 10 ABS()!", null));
         // ^ 40
-        defaultChallenges.add(new Challenge("Facebook roulette", "Have a colleague send an awkward message to a random person in your Facebook friend list.", null));
+        defaultChallenges.add(new Challenge("Facebook roulette.", "Have a colleague send an awkward message to a random person in your Facebook friend list.", null));
         defaultChallenges.add(new Challenge("What The Hack?", "Get a virutal cookie from the dev team!", null));
         defaultChallenges.add(new Challenge("Potty mouth!", "Shout a random swear word!", null));
         defaultChallenges.add(new Challenge("Hello?", "Take off your shoe and use it as a cellphone to talk to a colleague.", "hello_gotham.wav"));

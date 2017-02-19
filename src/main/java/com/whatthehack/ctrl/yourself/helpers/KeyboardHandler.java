@@ -71,9 +71,13 @@ public class KeyboardHandler implements NativeKeyListener {
     public void handleAlt(int keyCode) {
 
         switch (keyCode) {
+            /*
             case NativeKeyEvent.VC_F4: // ALT F4
+                gameManager.launchChallenge(); // random
                 break;
+             */
             case NativeKeyEvent.VC_TAB: //ALT TAB
+                gameManager.launchChallenge(); // random
                 break;
         }
     }
@@ -82,15 +86,20 @@ public class KeyboardHandler implements NativeKeyListener {
         // CTRL T, C, Z, V, S
         switch (keyCode) {
             case NativeKeyEvent.VC_C:
+                gameManager.launchChallenge(); // random
                 System.out.print("Ctrl-C");
                 break;
             case NativeKeyEvent.VC_S:
+                gameManager.launchChallenge(); // random
                 break;
             case NativeKeyEvent.VC_T:
+                gameManager.launchChallenge(); // random
                 break;
             case NativeKeyEvent.VC_V:
+                gameManager.launchChallenge(); // random
                 break;
             case NativeKeyEvent.VC_Z:
+                gameManager.launchChallenge(); // random
                 break;
         }
     }
@@ -99,8 +108,10 @@ public class KeyboardHandler implements NativeKeyListener {
         // CTRL-ALT DEL, F1..12
         switch (keyCode) {
             case NativeKeyEvent.VC_DELETE:
+                gameManager.launchChallenge(); // random
                 break;
             case ALL_F_KEYS:
+                gameManager.launchChallenge(); // random
                 break;
 
         }
@@ -110,10 +121,13 @@ public class KeyboardHandler implements NativeKeyListener {
         // CTRL-SHIFT Z, N, P
         switch (keyCode) {
             case NativeKeyEvent.VC_N:
+                gameManager.launchChallenge(); // random
                 break;
             case NativeKeyEvent.VC_P:
+                gameManager.launchChallenge(); // random
                 break;
             case NativeKeyEvent.VC_Z:
+                gameManager.launchChallenge(); // random
                 break;
         }
     }

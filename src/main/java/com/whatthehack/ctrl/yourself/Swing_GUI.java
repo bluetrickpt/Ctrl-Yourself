@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
+import javax.swing.InputVerifier;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
@@ -79,8 +80,8 @@ public class Swing_GUI extends javax.swing.JFrame {
         this.addWindowListener(close_handler);
         d_Login.addWindowListener(close_handler);
         d_Login.setVisible(true);
-
         gameManager.setInputMessageField(tf_message);
+        gameManager.setChallengePopup(jLabel1, jLabel2, d_Challenge);
     }
 
     /**
@@ -121,7 +122,6 @@ public class Swing_GUI extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         p_submitMessage = new javax.swing.JPanel();
         tf_message = new javax.swing.JTextField();
         b_sendNudes = new javax.swing.JButton();
@@ -143,7 +143,6 @@ public class Swing_GUI extends javax.swing.JFrame {
         d_Login.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         d_Login.setTitle("Ctrl-Yourself");
         d_Login.setAlwaysOnTop(true);
-        d_Login.setMaximumSize(new java.awt.Dimension(446, 389));
         d_Login.setMinimumSize(new java.awt.Dimension(446, 389));
         d_Login.setResizable(false);
 
@@ -278,13 +277,17 @@ public class Swing_GUI extends javax.swing.JFrame {
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
-        d_HostIP.setMinimumSize(new java.awt.Dimension(460, 232));
+        d_HostIP.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        d_HostIP.setMinimumSize(new java.awt.Dimension(460, 246));
         d_HostIP.setResizable(false);
+        d_HostIP.setSize(new java.awt.Dimension(460, 246));
         d_HostIP.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 d_HostIPKeyTyped(evt);
             }
         });
+
+        p_HostIP.setMinimumSize(new java.awt.Dimension(479, 235));
 
         b_Connect.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         b_Connect.setText("Connect");
@@ -413,7 +416,7 @@ public class Swing_GUI extends javax.swing.JFrame {
                 .addComponent(b_Connect, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(t_ConnectionWarning, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout d_HostIPLayout = new javax.swing.GroupLayout(d_HostIP.getContentPane());
@@ -453,6 +456,8 @@ public class Swing_GUI extends javax.swing.JFrame {
             .addComponent(sp_Rules, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
 
+        d_Challenge.setSize(new java.awt.Dimension(408, 291));
+
         jLabel1.setFont(new java.awt.Font("Monospaced", 1, 48)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("EVENT TITLE");
@@ -461,23 +466,12 @@ public class Swing_GUI extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Event description");
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -486,9 +480,7 @@ public class Swing_GUI extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
+                .addGap(125, 125, 125))
         );
 
         javax.swing.GroupLayout d_ChallengeLayout = new javax.swing.GroupLayout(d_Challenge.getContentPane());
@@ -556,6 +548,9 @@ public class Swing_GUI extends javax.swing.JFrame {
             chatUsersOnlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
         );
+
+        jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane2.setAutoscrolls(true);
 
         jScrollPane2.setViewportView(l_messages);
 
@@ -726,6 +721,7 @@ public class Swing_GUI extends javax.swing.JFrame {
 
             setVisible(true);
             tf_message.requestFocusInWindow();
+            gameManager.startHandlingKeyboard();
         } catch (UnknownHostException ex) {
             Logger.getLogger(Swing_GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -836,6 +832,7 @@ public class Swing_GUI extends javax.swing.JFrame {
                                     gameManager.setL_users(l_users);
                                     gameManager.setChatWindow(l_messages);
                                     setVisible(true);
+                                    gameManager.startHandlingKeyboard();
                                 }
                             } catch (InterruptedException | ExecutionException ex) {
                                 Logger.getLogger(Swing_GUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -893,45 +890,9 @@ public class Swing_GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mi_muteActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        d_Challenge.setVisible(false);
-        setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void d_HostIPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_d_HostIPKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_d_HostIPKeyTyped
-
-    private class InputVerifier {
-
-        private String validate;
-
-        public InputVerifier(String validate) {
-            this.validate = validate;
-        }
-
-        public boolean verifyIPSingle(JComponent input) {
-            JTextField textField = (JTextField) input;
-
-            switch (validate) {
-                case "IPSingle":
-                /*try(){
-
-                    }catch(){
-
-                    }
-                        return true;
-                    break;*/
-                case "IPComplete":
-
-                    break;
-                default:
-                    return false;
-            }
-            return false;
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_Connect;
@@ -943,7 +904,6 @@ public class Swing_GUI extends javax.swing.JFrame {
     private javax.swing.JDialog d_HostIP;
     private javax.swing.JDialog d_Login;
     private javax.swing.JDialog d_Rules;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
