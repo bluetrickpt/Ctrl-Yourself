@@ -5,6 +5,7 @@
  */
 package com.whatthehack.ctrl.yourself.comms;
 
+import com.whatthehack.ctrl.yourself.game.GameManager;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -17,18 +18,18 @@ public class Message {
 
     private String nickname;
     private String content;
-
     private int code;
 
     //TODO: Implement codes
-    private static final int SYSTEM_MESSAGE = 0;
-    private static final int USER_MESSAGE = 1;
-    private static final int CHALLENGE_MESSAGE = 1;
+    public static final int SYSTEM_MESSAGE = 0;
+    public static final int USER_MESSAGE = 1;
+    public static final int CHALLENGE_MESSAGE = 2;
+    public static final int NEW_MEMBER_MESSAGE = 3;
 
-    public Message(String nickname, String content) {
+    public Message(String nickname, String content, int code) {
         this.nickname = nickname;
         this.content = content;
-
+        this.code = code;
     }
 
     public Message(String jsonString) throws ParseException {
@@ -39,12 +40,14 @@ public class Message {
         //parsedObject.
         this.nickname = jsonObject.get("nickname").toString();
         this.content = jsonObject.get("content").toString();
+        this.code = Integer.parseInt(jsonObject.get("code").toString());
     }
 
     public String toJSONString() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("nickname", getNickname());
         jsonObject.put("content", getContent());
+        jsonObject.put("code", getCode());
         return jsonObject.toJSONString();
     }
 
@@ -78,7 +81,45 @@ public class Message {
 
     @Override
     public String toString() {
-        return new String(nickname + ": " + content);
+        return new String(nickname + ": " + content + " (" + code + ")");
     }
 
+    /**
+     * @return the code
+     */
+    public int getCode() {
+        return code;
+    }
+
+    /**
+     * @param code the code to set
+     */
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    static String handleNewMessage(Message receivedMessage, GameManager gameManager) {
+        String result = new String();
+        switch (receivedMessage.getCode()) {
+            case NEW_MEMBER_MESSAGE:
+                gameManager.addUser(receivedMessage.getNickname());
+            //No break, since NEW_MEMBER_MESSAGE is also a SYSTEM_MESSAGE
+            case SYSTEM_MESSAGE:
+                result = "*** " + receivedMessage.getContent() + " ***";
+                break;
+            case USER_MESSAGE:
+                result = receivedMessage.getNickname() + ": " + receivedMessage.getContent();
+                break;
+            case CHALLENGE_MESSAGE:
+                //TODO
+                break;
+            default:
+                throw new RuntimeException("Invalid entry");
+        }
+        return result;
+    }
+
+    public static String getWelcomeString(String nickname) {
+        return (nickname + " joined the chat");
+    }
 }

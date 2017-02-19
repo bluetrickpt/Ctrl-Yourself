@@ -47,16 +47,18 @@ public class Client extends Thread {
         try {
             //System.out.println("server_ip=" + server_ip + " port = " + socket_port);
             clientSocket = new Socket(server_ip, socket_port);
-            sendMessage("");//send empty msg so that server adds user
+            sendMessage("", Message.SYSTEM_MESSAGE);//send empty msg so that server adds user
             new ReadStreamThread(clientSocket);
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void sendMessage(String contents) {
+    public void sendMessage(String contents, int code) {
         try {
-            CommsHelper.sendMessage(clientSocket, new Message(getNickname(), contents));
+            CommsHelper.sendMessage(
+                    clientSocket, new Message(getNickname(), contents, code
+                    ));
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -89,7 +91,8 @@ public class Client extends Thread {
             while (true) {
                 try {
                     //System.out.println(CommsHelper.receiveMessage(socket).toString());
-                    gameManager.updateChatWindow(CommsHelper.receiveMessage(socket).toString());
+                    Message receivedMessage = CommsHelper.receiveMessage(socket);
+                    gameManager.updateChatWindow(Message.handleNewMessage(receivedMessage, gameManager));
                 } catch (ParseException ex) {
                     Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
