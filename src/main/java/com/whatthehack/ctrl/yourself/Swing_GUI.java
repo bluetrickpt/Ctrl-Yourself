@@ -6,6 +6,7 @@
 package com.whatthehack.ctrl.yourself;
 
 import com.whatthehack.ctrl.yourself.comms.Client;
+import com.whatthehack.ctrl.yourself.comms.Message;
 import com.whatthehack.ctrl.yourself.comms.Server;
 import com.whatthehack.ctrl.yourself.game.GameManager;
 import com.whatthehack.ctrl.yourself.helpers.CommsHelper;
@@ -591,7 +592,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         String toSendMessage = tf_message.getText();
         if (!toSendMessage.isEmpty()) {
-            gameManager.getClient().sendMessage(toSendMessage);
+            gameManager.getClient().sendMessage(toSendMessage, Message.USER_MESSAGE);
             tf_message.setText("");
         }
         tf_message.requestFocusInWindow();
@@ -716,7 +717,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String toSendMessage = tf_message.getText();
             if (!toSendMessage.isEmpty()) {
-                gameManager.getClient().sendMessage(toSendMessage);
+                gameManager.getClient().sendMessage(toSendMessage, Message.USER_MESSAGE);
                 tf_message.setText("");
             }
             tf_message.requestFocusInWindow();

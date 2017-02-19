@@ -6,11 +6,13 @@
 package com.whatthehack.ctrl.yourself.game;
 
 import com.whatthehack.ctrl.yourself.comms.Client;
+import com.whatthehack.ctrl.yourself.comms.Message;
 import com.whatthehack.ctrl.yourself.comms.Server;
 import com.whatthehack.ctrl.yourself.helpers.FilesHelper;
 import java.io.IOException;
 import java.util.ArrayList;
 import com.whatthehack.ctrl.yourself.sound.SoundManager;
+import java.awt.Font;
 import javax.swing.JTextArea;
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
@@ -39,7 +41,7 @@ public class GameManager {
         defaultChallenges.add(new Challenge("yellow", "Sing toy", "toyKaraoke.wav"));
         activeChallenges = FilesHelper.readCSVFileChallenges(challengeFile, defaultChallenges);
         //System.out.println(activeChallenges);
-        
+
         users = new DefaultListModel();
         messages = new DefaultListModel();
         l_users = new JList(users);
@@ -75,18 +77,21 @@ public class GameManager {
         l_users.setModel(users);
     }
 
-    public JList getL_users(){
+    public JList getL_users() {
         return l_users;
     }
 
-    
-    public void setL_users(JList l_users){
+    public void setL_users(JList l_users) {
         this.l_users = l_users;
     }
 
     public void updateChatWindow(String message) {
+
+        //message = "<html>normal <b>bold</b> normal</html>";
+        chatWindow.setFont(chatWindow.getFont().deriveFont(Font.PLAIN));
         messages.addElement(message);
         chatWindow.setModel(messages);
+
     }
 
     public void setChatWindow(JList l_messages) {
