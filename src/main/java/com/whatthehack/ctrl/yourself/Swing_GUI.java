@@ -97,11 +97,11 @@ public class Swing_GUI extends javax.swing.JFrame {
         b_sendNudes = new javax.swing.JButton();
         p_chat = new javax.swing.JPanel();
         chatUsersOnline = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        ta_users = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        l_users = new javax.swing.JList<>();
         p_messages = new javax.swing.JPanel();
-        sp_messages = new javax.swing.JScrollPane();
-        ta_messages = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        l_messages = new javax.swing.JList<>();
         mb_Menu = new javax.swing.JMenuBar();
         m_file = new javax.swing.JMenu();
         mi_quit = new javax.swing.JMenuItem();
@@ -111,7 +111,6 @@ public class Swing_GUI extends javax.swing.JFrame {
         d_Login.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         d_Login.setTitle("Ctrl-Yourself");
         d_Login.setAlwaysOnTop(true);
-        d_Login.setLocationByPlatform(true);
         d_Login.setMinimumSize(new java.awt.Dimension(777, 508));
         d_Login.setResizable(false);
 
@@ -245,7 +244,6 @@ public class Swing_GUI extends javax.swing.JFrame {
         );
 
         d_HostIP.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        d_HostIP.setMaximumSize(new java.awt.Dimension(460, 232));
         d_HostIP.setMinimumSize(new java.awt.Dimension(460, 232));
         d_HostIP.setResizable(false);
 
@@ -425,7 +423,6 @@ public class Swing_GUI extends javax.swing.JFrame {
         });
 
         b_sendNudes.setText("Send");
-        b_sendNudes.setActionCommand("Send");
         b_sendNudes.setFocusPainted(false);
         b_sendNudes.setFocusable(false);
         b_sendNudes.addActionListener(new java.awt.event.ActionListener() {
@@ -451,42 +448,32 @@ public class Swing_GUI extends javax.swing.JFrame {
             .addComponent(tf_message)
         );
 
-        jScrollPane2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        ta_users.setEditable(false);
-        ta_users.setColumns(20);
-        ta_users.setRows(5);
-        ta_users.setFocusable(false);
-        jScrollPane2.setViewportView(ta_users);
-        ta_users.getAccessibleContext().setAccessibleName("");
+        l_users.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        l_users.setFocusable(false);
+        jScrollPane1.setViewportView(l_users);
 
         javax.swing.GroupLayout chatUsersOnlineLayout = new javax.swing.GroupLayout(chatUsersOnline);
         chatUsersOnline.setLayout(chatUsersOnlineLayout);
         chatUsersOnlineLayout.setHorizontalGroup(
             chatUsersOnlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(chatUsersOnlineLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
         );
         chatUsersOnlineLayout.setVerticalGroup(
             chatUsersOnlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
         );
 
-        ta_messages.setEditable(false);
-        ta_messages.setColumns(20);
-        ta_messages.setRows(5);
-        sp_messages.setViewportView(ta_messages);
+        jScrollPane2.setViewportView(l_messages);
 
         javax.swing.GroupLayout p_messagesLayout = new javax.swing.GroupLayout(p_messages);
         p_messages.setLayout(p_messagesLayout);
         p_messagesLayout.setHorizontalGroup(
             p_messagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sp_messages, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
         );
         p_messagesLayout.setVerticalGroup(
             p_messagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sp_messages, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
         );
 
         javax.swing.GroupLayout p_chatLayout = new javax.swing.GroupLayout(p_chat);
@@ -627,10 +614,12 @@ public class Swing_GUI extends javax.swing.JFrame {
                     CommsHelper.getPort(), gameManager.getNickname(),
                     gameManager)
             );
-            gameManager.setTa_users(ta_users);
-            gameManager.setChatWindow(ta_messages);
+            //gameManager.setTa_users(ta_users);
+            gameManager.setL_users(l_users);
+            gameManager.setChatWindow(l_messages);
 
             setVisible(true);
+            tf_message.requestFocusInWindow();
         } catch (UnknownHostException ex) {
             Logger.getLogger(Swing_GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -704,6 +693,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         d_HostIP.setVisible(false);
         setVisible(true);
+        tf_message.requestFocusInWindow();
     }//GEN-LAST:event_b_ConnnectActionPerformed
 
     private void mi_rulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_rulesActionPerformed
@@ -751,7 +741,10 @@ public class Swing_GUI extends javax.swing.JFrame {
     private javax.swing.JDialog d_Login;
     private javax.swing.JDialog d_Rules;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList<String> l_messages;
+    private javax.swing.JList<String> l_users;
     private javax.swing.JMenu m_file;
     private javax.swing.JMenu m_help;
     private javax.swing.JMenuBar mb_Menu;
@@ -764,7 +757,6 @@ public class Swing_GUI extends javax.swing.JFrame {
     private javax.swing.JPanel p_messages;
     private javax.swing.JPanel p_submitMessage;
     private javax.swing.JScrollPane sp_Rules;
-    private javax.swing.JScrollPane sp_messages;
     private javax.swing.JLabel t_HostIP;
     private javax.swing.JLabel t_Nickname;
     private javax.swing.JLabel t_Port;
@@ -772,8 +764,6 @@ public class Swing_GUI extends javax.swing.JFrame {
     private javax.swing.JLabel t_point2;
     private javax.swing.JLabel t_point3;
     private javax.swing.JTextArea ta_Rules;
-    private javax.swing.JTextArea ta_messages;
-    private javax.swing.JTextArea ta_users;
     private javax.swing.JTextField tf_IP1;
     private javax.swing.JTextField tf_IP2;
     private javax.swing.JTextField tf_IP3;

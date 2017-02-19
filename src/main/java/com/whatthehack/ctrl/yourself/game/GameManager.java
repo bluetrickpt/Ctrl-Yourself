@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import com.whatthehack.ctrl.yourself.sound.SoundManager;
 import javax.swing.JTextArea;
+import javax.swing.JList;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -27,16 +29,21 @@ public class GameManager {
     private Server server;
     private Client client;
 
-    private ArrayList<String> users;
-    private JTextArea ta_users;
-    private JTextArea chatWindow;
+    private DefaultListModel users;
+    private JList l_users;
+    private JList chatWindow;
+    private DefaultListModel messages;
 
     public GameManager() throws IOException {
         defaultChallenges.add(new Challenge("yellow", "Sing yellow from coldplay", "yellowKaraoke.wav"));
         defaultChallenges.add(new Challenge("yellow", "Sing toy", "toyKaraoke.wav"));
         activeChallenges = FilesHelper.readCSVFileChallenges(challengeFile, defaultChallenges);
         //System.out.println(activeChallenges);
-        users = new ArrayList<String>();
+        
+        users = new DefaultListModel();
+        messages = new DefaultListModel();
+        l_users = new JList(users);
+        chatWindow = new JList(messages);
     }
 
     public String getNickname() {
@@ -64,29 +71,26 @@ public class GameManager {
     }
 
     public void addUser(String nickname) {
-        users.add(nickname);
-        getTa_users().setText(getTa_users().getText() + nickname + '\n');
+        //users.add(nickname);
+        users.addElement(nickname);
+        l_users.setModel(users);
     }
 
-    /**
-     * @return the ta_users
-     */
-    public JTextArea getTa_users() {
-        return ta_users;
+    public JList getL_users(){
+        return l_users;
     }
 
-    /**
-     * @param ta_users the ta_users to set
-     */
-    public void setTa_users(JTextArea ta_users) {
-        this.ta_users = ta_users;
+    
+    public void setL_users(JList l_users){
+        this.l_users = l_users;
     }
 
     public void updateChatWindow(String message) {
-        chatWindow.setText(chatWindow.getText().concat(message + '\n'));
+        messages.addElement(message);
+        chatWindow.setModel(messages);
     }
 
-    public void setChatWindow(JTextArea ta_messages) {
-        this.chatWindow = ta_messages;
+    public void setChatWindow(JList l_messages) {
+        this.chatWindow = l_messages;
     }
 }
