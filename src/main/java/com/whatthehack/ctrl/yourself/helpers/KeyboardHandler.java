@@ -83,11 +83,16 @@ public class KeyboardHandler implements NativeKeyListener {
     }
 
     public void handleCtrl(int keyCode) {
-        // CTRL T, C, Z, V, S
+        // CTRL T, C, Z, V, S, X
         switch (keyCode) {
+            case NativeKeyEvent.VC_A:
+                gameManager.launchChallenge(); // random
+                break;
             case NativeKeyEvent.VC_C:
                 gameManager.launchChallenge(); // random
-                System.out.print("Ctrl-C");
+                break;
+            case NativeKeyEvent.VC_F:
+                gameManager.launchChallenge(); // random
                 break;
             case NativeKeyEvent.VC_S:
                 gameManager.launchChallenge(); // random
@@ -96,6 +101,12 @@ public class KeyboardHandler implements NativeKeyListener {
                 gameManager.launchChallenge(); // random
                 break;
             case NativeKeyEvent.VC_V:
+                gameManager.launchChallenge(); // random
+                break;
+            case NativeKeyEvent.VC_X:
+                gameManager.launchChallenge(); // random
+                break;
+            case NativeKeyEvent.VC_Y:
                 gameManager.launchChallenge(); // random
                 break;
             case NativeKeyEvent.VC_Z:
@@ -124,6 +135,9 @@ public class KeyboardHandler implements NativeKeyListener {
                 gameManager.launchChallenge(); // random
                 break;
             case NativeKeyEvent.VC_P:
+                gameManager.launchChallenge(); // random
+                break;
+            case NativeKeyEvent.VC_T:
                 gameManager.launchChallenge(); // random
                 break;
             case NativeKeyEvent.VC_Z:
