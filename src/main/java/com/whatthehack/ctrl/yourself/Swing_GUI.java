@@ -11,11 +11,19 @@ import com.whatthehack.ctrl.yourself.game.GameManager;
 import com.whatthehack.ctrl.yourself.helpers.CommsHelper;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
+import javax.swing.Timer;
 
 /**
  *
@@ -79,7 +87,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         tf_Port = new javax.swing.JTextField();
         d_HostIP = new javax.swing.JDialog();
         p_HostIP = new javax.swing.JPanel();
-        b_Connnect = new javax.swing.JButton();
+        b_Connect = new javax.swing.JButton();
         t_HostIP = new javax.swing.JLabel();
         p_IP = new javax.swing.JPanel();
         tf_IP1 = new javax.swing.JTextField();
@@ -89,6 +97,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         t_point1 = new javax.swing.JLabel();
         t_point2 = new javax.swing.JLabel();
         t_point3 = new javax.swing.JLabel();
+        t_ConnectionWarning = new javax.swing.JLabel();
         d_Rules = new javax.swing.JDialog();
         sp_Rules = new javax.swing.JScrollPane();
         ta_Rules = new javax.swing.JTextArea();
@@ -245,16 +254,15 @@ public class Swing_GUI extends javax.swing.JFrame {
         );
 
         d_HostIP.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        d_HostIP.setMaximumSize(new java.awt.Dimension(460, 232));
         d_HostIP.setMinimumSize(new java.awt.Dimension(460, 232));
         d_HostIP.setResizable(false);
 
-        b_Connnect.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        b_Connnect.setText("Connect");
-        b_Connnect.setEnabled(false);
-        b_Connnect.addActionListener(new java.awt.event.ActionListener() {
+        b_Connect.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        b_Connect.setText("Connect");
+        b_Connect.setEnabled(false);
+        b_Connect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b_ConnnectActionPerformed(evt);
+                b_ConnectActionPerformed(evt);
             }
         });
 
@@ -347,6 +355,8 @@ public class Swing_GUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        t_ConnectionWarning.setMinimumSize(new java.awt.Dimension(300, 20));
+
         javax.swing.GroupLayout p_HostIPLayout = new javax.swing.GroupLayout(p_HostIP);
         p_HostIP.setLayout(p_HostIPLayout);
         p_HostIPLayout.setHorizontalGroup(
@@ -354,12 +364,16 @@ public class Swing_GUI extends javax.swing.JFrame {
             .addGroup(p_HostIPLayout.createSequentialGroup()
                 .addContainerGap(100, Short.MAX_VALUE)
                 .addGroup(p_HostIPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(b_Connnect, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(b_Connect, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(p_HostIPLayout.createSequentialGroup()
                         .addComponent(t_HostIP)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(p_IP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(100, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_HostIPLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(t_ConnectionWarning, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
         p_HostIPLayout.setVerticalGroup(
             p_HostIPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -369,8 +383,10 @@ public class Swing_GUI extends javax.swing.JFrame {
                     .addComponent(p_IP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(t_HostIP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(b_Connnect, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addComponent(b_Connect, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(t_ConnectionWarning, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout d_HostIPLayout = new javax.swing.GroupLayout(d_HostIP.getContentPane());
@@ -425,7 +441,6 @@ public class Swing_GUI extends javax.swing.JFrame {
         });
 
         b_sendNudes.setText("Send");
-        b_sendNudes.setActionCommand("Send");
         b_sendNudes.setFocusPainted(false);
         b_sendNudes.setFocusable(false);
         b_sendNudes.addActionListener(new java.awt.event.ActionListener() {
@@ -601,6 +616,7 @@ public class Swing_GUI extends javax.swing.JFrame {
     private void b_joinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_joinActionPerformed
         // TODO add your handling code here:
         d_Login.setVisible(false);
+        CommsHelper.setPort((short) Integer.parseInt(tf_Port.getText()));
         d_HostIP.setVisible(true);
     }//GEN-LAST:event_b_joinActionPerformed
 
@@ -696,15 +712,72 @@ public class Swing_GUI extends javax.swing.JFrame {
             evt.consume();
         }
         if (tf_IP4.getText().length() == 2 && Character.isDigit(evt.getKeyChar())) {
-            b_Connnect.setEnabled(true);
+            b_Connect.setEnabled(true);
         }
     }//GEN-LAST:event_tf_IP4KeyTyped
 
-    private void b_ConnnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ConnnectActionPerformed
+    private void b_ConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ConnectActionPerformed
         // TODO add your handling code here:
-        d_HostIP.setVisible(false);
-        setVisible(true);
-    }//GEN-LAST:event_b_ConnnectActionPerformed
+        //d_HostIP.setVisible(false);
+        
+        String IPHost = tf_IP1.getText()+'.'+tf_IP2.getText() +'.' + tf_IP3.getText() +'.' +tf_IP4.getText();
+        
+        if(!IPHost.isEmpty()) {
+            try {
+                Object res = InetAddress.getByName(IPHost);
+                if(res instanceof Inet4Address){
+                    //System.out.println("Valid Address!");
+                    gameManager.setNickname(tf_Nickname.getText());
+                    
+                    //System.out.println("invoking");
+                    t_ConnectionWarning.setText("Waiting for connection...");
+                    
+                    
+                SwingWorker worker = new SwingWorker<Integer, Void>() {
+                    @Override                   
+                    public Integer doInBackground() throws IOException {
+                        if (!((Inet4Address) res).isReachable(3000)){
+                            t_ConnectionWarning.setText("Can't connect to this IP. Try again.");
+                            return -1;
+                        }
+                        return 1;
+                    }
+                                      
+                    @Override
+                    public void done() {
+                        try {
+                            int res = get();
+                            if(res==1){
+                              gameManager.setClient(new Client(IPHost,
+                                CommsHelper.getPort(), gameManager.getNickname(), gameManager)
+                                   );
+                                gameManager.setTa_users(ta_users);
+                                gameManager.setChatWindow(ta_messages);
+                                setVisible(true);
+                            }
+                        } catch (InterruptedException | ExecutionException ex) {
+                            Logger.getLogger(Swing_GUI.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    }
+                };
+                
+                worker.execute();                  
+                //t_ConnectionWarning.setText("Connected!");
+
+
+
+                }
+            } catch (final UnknownHostException ex) {
+                t_ConnectionWarning.setText("Invalid IP Address.");
+
+            }
+        }
+        
+        
+        
+       
+    }//GEN-LAST:event_b_ConnectActionPerformed
 
     private void mi_rulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_rulesActionPerformed
         // TODO add your handling code here:
@@ -742,7 +815,7 @@ public class Swing_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_messageActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton b_Connnect;
+    private javax.swing.JButton b_Connect;
     private javax.swing.JButton b_create;
     private javax.swing.JButton b_join;
     private javax.swing.JButton b_sendNudes;
@@ -765,6 +838,7 @@ public class Swing_GUI extends javax.swing.JFrame {
     private javax.swing.JPanel p_submitMessage;
     private javax.swing.JScrollPane sp_Rules;
     private javax.swing.JScrollPane sp_messages;
+    private javax.swing.JLabel t_ConnectionWarning;
     private javax.swing.JLabel t_HostIP;
     private javax.swing.JLabel t_Nickname;
     private javax.swing.JLabel t_Port;
