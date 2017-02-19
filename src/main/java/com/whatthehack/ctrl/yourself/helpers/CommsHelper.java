@@ -23,8 +23,6 @@ public class CommsHelper {
 
     private static short port = 4445;
 
-    public static final String NEW_CLIENT_MESSAGE = "USER JOINED THE ROOM.";
-
     /**
      * @return the port
      */

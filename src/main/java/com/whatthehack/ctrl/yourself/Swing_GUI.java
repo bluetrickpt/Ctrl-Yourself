@@ -6,6 +6,7 @@
 package com.whatthehack.ctrl.yourself;
 
 import com.whatthehack.ctrl.yourself.comms.Client;
+import com.whatthehack.ctrl.yourself.comms.Message;
 import com.whatthehack.ctrl.yourself.comms.Server;
 import com.whatthehack.ctrl.yourself.game.GameManager;
 import com.whatthehack.ctrl.yourself.helpers.CommsHelper;
@@ -106,11 +107,11 @@ public class Swing_GUI extends javax.swing.JFrame {
         b_sendNudes = new javax.swing.JButton();
         p_chat = new javax.swing.JPanel();
         chatUsersOnline = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        ta_users = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        l_users = new javax.swing.JList<>();
         p_messages = new javax.swing.JPanel();
-        sp_messages = new javax.swing.JScrollPane();
-        ta_messages = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        l_messages = new javax.swing.JList<>();
         mb_Menu = new javax.swing.JMenuBar();
         m_file = new javax.swing.JMenu();
         mi_quit = new javax.swing.JMenuItem();
@@ -120,7 +121,6 @@ public class Swing_GUI extends javax.swing.JFrame {
         d_Login.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         d_Login.setTitle("Ctrl-Yourself");
         d_Login.setAlwaysOnTop(true);
-        d_Login.setLocationByPlatform(true);
         d_Login.setMinimumSize(new java.awt.Dimension(777, 508));
         d_Login.setResizable(false);
 
@@ -355,6 +355,7 @@ public class Swing_GUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        t_ConnectionWarning.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         t_ConnectionWarning.setMinimumSize(new java.awt.Dimension(300, 20));
 
         javax.swing.GroupLayout p_HostIPLayout = new javax.swing.GroupLayout(p_HostIP);
@@ -362,18 +363,15 @@ public class Swing_GUI extends javax.swing.JFrame {
         p_HostIPLayout.setHorizontalGroup(
             p_HostIPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(p_HostIPLayout.createSequentialGroup()
-                .addContainerGap(100, Short.MAX_VALUE)
+                .addContainerGap(90, Short.MAX_VALUE)
                 .addGroup(p_HostIPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(b_Connect, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(b_Connect, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                     .addGroup(p_HostIPLayout.createSequentialGroup()
                         .addComponent(t_HostIP)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(p_IP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(100, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p_HostIPLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(t_ConnectionWarning, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                        .addComponent(p_IP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(t_ConnectionWarning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         p_HostIPLayout.setVerticalGroup(
             p_HostIPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -466,42 +464,32 @@ public class Swing_GUI extends javax.swing.JFrame {
             .addComponent(tf_message)
         );
 
-        jScrollPane2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        ta_users.setEditable(false);
-        ta_users.setColumns(20);
-        ta_users.setRows(5);
-        ta_users.setFocusable(false);
-        jScrollPane2.setViewportView(ta_users);
-        ta_users.getAccessibleContext().setAccessibleName("");
+        l_users.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        l_users.setFocusable(false);
+        jScrollPane1.setViewportView(l_users);
 
         javax.swing.GroupLayout chatUsersOnlineLayout = new javax.swing.GroupLayout(chatUsersOnline);
         chatUsersOnline.setLayout(chatUsersOnlineLayout);
         chatUsersOnlineLayout.setHorizontalGroup(
             chatUsersOnlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(chatUsersOnlineLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
         );
         chatUsersOnlineLayout.setVerticalGroup(
             chatUsersOnlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
         );
 
-        ta_messages.setEditable(false);
-        ta_messages.setColumns(20);
-        ta_messages.setRows(5);
-        sp_messages.setViewportView(ta_messages);
+        jScrollPane2.setViewportView(l_messages);
 
         javax.swing.GroupLayout p_messagesLayout = new javax.swing.GroupLayout(p_messages);
         p_messages.setLayout(p_messagesLayout);
         p_messagesLayout.setHorizontalGroup(
             p_messagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sp_messages, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
         );
         p_messagesLayout.setVerticalGroup(
             p_messagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sp_messages, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
         );
 
         javax.swing.GroupLayout p_chatLayout = new javax.swing.GroupLayout(p_chat);
@@ -624,7 +612,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         String toSendMessage = tf_message.getText();
         if (!toSendMessage.isEmpty()) {
-            gameManager.getClient().sendMessage(toSendMessage);
+            gameManager.getClient().sendMessage(toSendMessage, Message.USER_MESSAGE);
             tf_message.setText("");
         }
         tf_message.requestFocusInWindow();
@@ -643,10 +631,12 @@ public class Swing_GUI extends javax.swing.JFrame {
                     CommsHelper.getPort(), gameManager.getNickname(),
                     gameManager)
             );
-            gameManager.setTa_users(ta_users);
-            gameManager.setChatWindow(ta_messages);
+            //gameManager.setTa_users(ta_users);
+            gameManager.setL_users(l_users);
+            gameManager.setChatWindow(l_messages);
 
             setVisible(true);
+            tf_message.requestFocusInWindow();
         } catch (UnknownHostException ex) {
             Logger.getLogger(Swing_GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -717,67 +707,56 @@ public class Swing_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_IP4KeyTyped
 
     private void b_ConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ConnectActionPerformed
-        // TODO add your handling code here:
-        //d_HostIP.setVisible(false);
-        
+        t_ConnectionWarning.setText("");
         String IPHost = tf_IP1.getText()+'.'+tf_IP2.getText() +'.' + tf_IP3.getText() +'.' +tf_IP4.getText();
-        
         if(!IPHost.isEmpty()) {
             try {
                 Object res = InetAddress.getByName(IPHost);
                 if(res instanceof Inet4Address){
                     //System.out.println("Valid Address!");
                     gameManager.setNickname(tf_Nickname.getText());
-                    
-                    //System.out.println("invoking");
                     t_ConnectionWarning.setText("Waiting for connection...");
                     
                     
-                SwingWorker worker = new SwingWorker<Integer, Void>() {
-                    @Override                   
-                    public Integer doInBackground() throws IOException {
-                        if (!((Inet4Address) res).isReachable(3000)){
-                            t_ConnectionWarning.setText("Can't connect to this IP. Try again.");
-                            return -1;
-                        }
-                        return 1;
-                    }
-                                      
-                    @Override
-                    public void done() {
-                        try {
-                            int res = get();
-                            if(res==1){
-                              gameManager.setClient(new Client(IPHost,
-                                CommsHelper.getPort(), gameManager.getNickname(), gameManager)
-                                   );
-                                gameManager.setTa_users(ta_users);
-                                gameManager.setChatWindow(ta_messages);
-                                setVisible(true);
+                    SwingWorker worker = new SwingWorker<Integer, Void>() {
+                        @Override                   
+                        public Integer doInBackground() throws IOException {
+                            if (!((Inet4Address) res).isReachable(3000)){
+                                t_ConnectionWarning.setText("Can't connect to this IP. Try again.");
+                                return -1;
                             }
-                        } catch (InterruptedException | ExecutionException ex) {
-                            Logger.getLogger(Swing_GUI.class.getName()).log(Level.SEVERE, null, ex);
+                            return 1;
                         }
 
-                    }
-                };
+                        @Override
+                        public void done() {
+                            try {
+                                int res = get();
+                                if(res==1){
+                                  gameManager.setClient(new Client(IPHost,
+                                    CommsHelper.getPort(), gameManager.getNickname(), gameManager)
+                                       );
+                                    gameManager.setL_users(l_users);
+                                    gameManager.setChatWindow(l_messages);
+                                    setVisible(true);
+                                }
+                            } catch (InterruptedException | ExecutionException ex) {
+                                Logger.getLogger(Swing_GUI.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+                    };
                 
                 worker.execute();                  
-                //t_ConnectionWarning.setText("Connected!");
-
-
-
                 }
             } catch (final UnknownHostException ex) {
                 t_ConnectionWarning.setText("Invalid IP Address.");
 
             }
-        }
-        
-        
-        
+        }  
        
     }//GEN-LAST:event_b_ConnectActionPerformed
+
 
     private void mi_rulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_rulesActionPerformed
         // TODO add your handling code here:
@@ -803,7 +782,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String toSendMessage = tf_message.getText();
             if (!toSendMessage.isEmpty()) {
-                gameManager.getClient().sendMessage(toSendMessage);
+                gameManager.getClient().sendMessage(toSendMessage, Message.USER_MESSAGE);
                 tf_message.setText("");
             }
             tf_message.requestFocusInWindow();
@@ -824,7 +803,10 @@ public class Swing_GUI extends javax.swing.JFrame {
     private javax.swing.JDialog d_Login;
     private javax.swing.JDialog d_Rules;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList<String> l_messages;
+    private javax.swing.JList<String> l_users;
     private javax.swing.JMenu m_file;
     private javax.swing.JMenu m_help;
     private javax.swing.JMenuBar mb_Menu;
@@ -837,7 +819,6 @@ public class Swing_GUI extends javax.swing.JFrame {
     private javax.swing.JPanel p_messages;
     private javax.swing.JPanel p_submitMessage;
     private javax.swing.JScrollPane sp_Rules;
-    private javax.swing.JScrollPane sp_messages;
     private javax.swing.JLabel t_ConnectionWarning;
     private javax.swing.JLabel t_HostIP;
     private javax.swing.JLabel t_Nickname;
@@ -846,8 +827,6 @@ public class Swing_GUI extends javax.swing.JFrame {
     private javax.swing.JLabel t_point2;
     private javax.swing.JLabel t_point3;
     private javax.swing.JTextArea ta_Rules;
-    private javax.swing.JTextArea ta_messages;
-    private javax.swing.JTextArea ta_users;
     private javax.swing.JTextField tf_IP1;
     private javax.swing.JTextField tf_IP2;
     private javax.swing.JTextField tf_IP3;

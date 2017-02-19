@@ -6,12 +6,21 @@
 package com.whatthehack.ctrl.yourself.game;
 
 import com.whatthehack.ctrl.yourself.comms.Client;
+import com.whatthehack.ctrl.yourself.comms.Message;
 import com.whatthehack.ctrl.yourself.comms.Server;
 import com.whatthehack.ctrl.yourself.helpers.FilesHelper;
+import com.whatthehack.ctrl.yourself.helpers.KeyboardHandler;
 import java.io.IOException;
 import java.util.ArrayList;
 import com.whatthehack.ctrl.yourself.sound.SoundManager;
+import java.awt.Font;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTextArea;
+import javax.swing.JList;
+import javax.swing.DefaultListModel;
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
 
 /**
  *
@@ -27,16 +36,42 @@ public class GameManager {
     private Server server;
     private Client client;
 
-    private ArrayList<String> users;
-    private JTextArea ta_users;
-    private JTextArea chatWindow;
+    private DefaultListModel users;
+    private JList userListWindow;
+    private JList chatWindow;
+    private DefaultListModel messages;
+
+    private KeyboardHandler keyboardHandler;
 
     public GameManager() throws IOException {
         defaultChallenges.add(new Challenge("yellow", "Sing yellow from coldplay", "yellowKaraoke.wav"));
         defaultChallenges.add(new Challenge("yellow", "Sing toy", "toyKaraoke.wav"));
         activeChallenges = FilesHelper.readCSVFileChallenges(challengeFile, defaultChallenges);
         //System.out.println(activeChallenges);
-        users = new ArrayList<String>();
+
+        users = new DefaultListModel();
+        messages = new DefaultListModel();
+        userListWindow = new JList(users);
+        chatWindow = new JList(messages);
+
+        keyboardHandler = new KeyboardHandler(this);
+
+        try {
+            GlobalScreen.registerNativeHook();
+        } catch (NativeHookException ex) {
+            System.err.println("There was a problem registering the native hook.");
+            System.err.println(ex.getMessage());
+
+            System.exit(1);
+        }
+
+        GlobalScreen.addNativeKeyListener(keyboardHandler);
+        // Get the logger for "org.jnativehook" and set the level to warning.
+        Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
+        logger.setLevel(Level.WARNING);
+
+        // Don't forget to disable the parent handlers.
+        logger.setUseParentHandlers(false);
     }
 
     public String getNickname() {
@@ -64,29 +99,30 @@ public class GameManager {
     }
 
     public void addUser(String nickname) {
-        users.add(nickname);
-        getTa_users().setText(getTa_users().getText() + nickname + '\n');
+        //users.add(nickname);
+        users.addElement(nickname);
+        userListWindow.setModel(users);
     }
 
-    /**
-     * @return the ta_users
-     */
-    public JTextArea getTa_users() {
-        return ta_users;
+    public JList getL_users() {
+        return userListWindow;
     }
 
-    /**
-     * @param ta_users the ta_users to set
-     */
-    public void setTa_users(JTextArea ta_users) {
-        this.ta_users = ta_users;
+    public void setL_users(JList l_users) {
+        this.userListWindow = l_users;
     }
 
     public void updateChatWindow(String message) {
-        chatWindow.setText(chatWindow.getText().concat(message + '\n'));
+        chatWindow.setFont(chatWindow.getFont().deriveFont(Font.PLAIN));
+        messages.addElement(message);
+        chatWindow.setModel(messages);
     }
 
-    public void setChatWindow(JTextArea ta_messages) {
-        this.chatWindow = ta_messages;
+    public void setChatWindow(JList l_messages) {
+        this.chatWindow = l_messages;
+    }
+
+    public KeyboardHandler getKeyboardHandler() {
+        return keyboardHandler;
     }
 }

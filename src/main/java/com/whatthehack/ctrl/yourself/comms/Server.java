@@ -68,17 +68,15 @@ public class Server extends Thread {
                 //System.out.println("Client connected");
 
                 //System.out.println("Server got: " + inFromServer.readLine());
-                String welcomeString = CommsHelper.NEW_CLIENT_MESSAGE;
-
                 Message clientMsg = CommsHelper.receiveMessage(clientSocket);
 
                 String clientNick = clientMsg.getNickname();
                 clientSockets2Nicknames.put(clientSocket, clientNick);
-                gameManager.addUser(clientNick);
                 //System.out.println(clientSockets2Nicknames.get(clientSocket));
-
+                String welcomeString = Message.getWelcomeString(clientNick);
                 //"Broadcast" welcome message
-                new Broadcast(clientSockets2Nicknames, new Message(clientNick, welcomeString));
+                new Broadcast(clientSockets2Nicknames,
+                        new Message(clientNick, welcomeString, Message.NEW_MEMBER_MESSAGE));
                 //Esperar por mensagem no socket em "ciclo infinito"
                 //Ao receber mensage, faz "brocaste"
                 while (true) {
