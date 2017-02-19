@@ -69,7 +69,7 @@ public class Server extends Thread {
 
                 //System.out.println("Server got: " + inFromServer.readLine());
                 Message clientMsg = CommsHelper.receiveMessage(clientSocket);
-
+                //System.out.print("received " + clientMsg);
                 String clientNick = clientMsg.getNickname();
                 clientSockets2Nicknames.put(clientSocket, clientNick);
                 //System.out.println(clientSockets2Nicknames.get(clientSocket));
@@ -77,10 +77,25 @@ public class Server extends Thread {
                 //"Broadcast" welcome message
                 new Broadcast(clientSockets2Nicknames,
                         new Message(clientNick, welcomeString, Message.NEW_MEMBER_MESSAGE));
-                //Esperar por mensagem no socket em "ciclo infinito"
-                //Ao receber mensage, faz "brocaste"
+
+                //Send users list
+                //String usersString = gameManageretL_users().get
+                String usersString = gameManager.getActiveUsersNicknames();
+                if (usersString != null && usersString.length() > 0) {
+                    CommsHelper.sendMessage(clientSocket,
+                            new Message(clientNick, usersString, Message.UPDATE_USER_LIST_MESSAGE));
+                }
+
                 while (true) {
-                    new Broadcast(clientSockets2Nicknames, CommsHelper.receiveMessage(clientSocket));
+                    Message gotMessage = CommsHelper.receiveMessage(clientSocket);
+                    if (gotMessage.getCode() == Message.USER_LEAVING_MESSAGE) {
+                        gameManager.removeUserFromList(gotMessage.getNickname());
+                        usersString = gameManager.getActiveUsersNicknames();
+                        new Broadcast(clientSockets2Nicknames, new Message("", usersString, Message.UPDATE_USER_LIST_MESSAGE));
+                    } else {
+                        new Broadcast(clientSockets2Nicknames, gotMessage);
+                    }
+
                 }
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -89,6 +104,11 @@ public class Server extends Thread {
             }
 
         }
+    }
+
+    public void handleServerClosing() {
+        new Broadcast(clientSockets2Nicknames,
+                new Message("", Message.serverClosingString(), Message.SERVER_CLOSING_MESSAGE));
     }
 
     private class Broadcast extends Thread {

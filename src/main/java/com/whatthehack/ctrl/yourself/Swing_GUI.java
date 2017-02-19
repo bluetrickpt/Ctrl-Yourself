@@ -59,8 +59,19 @@ public class Swing_GUI extends javax.swing.JFrame {
                 Server server = gameManager.getServer();
                 if (server != null) {
                     //server.sendShutdownMessage(); //TODO
+                    server.handleServerClosing();
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Swing_GUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     dispose();
                     System.exit(0);
+                }
+
+                Client client = gameManager.getClient();
+                if (client != null) {
+                    client.handleClosing();
                 }
             }
         };
@@ -68,6 +79,8 @@ public class Swing_GUI extends javax.swing.JFrame {
         this.addWindowListener(close_handler);
         d_Login.addWindowListener(close_handler);
         d_Login.setVisible(true);
+
+        gameManager.setInputMessageField(tf_message);
     }
 
     /**
@@ -781,10 +794,9 @@ public class Swing_GUI extends javax.swing.JFrame {
         if (tf_IP4.getText().length() == 0 && Character.isDigit(evt.getKeyChar())) {
             b_Connect.setEnabled(true);
         }
- 
+
     }//GEN-LAST:event_tf_IP4KeyTyped
-    
-    
+
     private void b_ConnnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ConnnectActionPerformed
         // TODO add your handling code here:
         d_HostIP.setVisible(false);
@@ -792,24 +804,21 @@ public class Swing_GUI extends javax.swing.JFrame {
         tf_message.requestFocusInWindow();
     }//GEN-LAST:event_b_ConnnectActionPerformed
 
-                                      
-
     private void b_ConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ConnectActionPerformed
         t_ConnectionWarning.setText("");
-        String IPHost = tf_IP1.getText()+'.'+tf_IP2.getText() +'.' + tf_IP3.getText() +'.' +tf_IP4.getText();
-        if(!IPHost.isEmpty()) {
+        String IPHost = tf_IP1.getText() + '.' + tf_IP2.getText() + '.' + tf_IP3.getText() + '.' + tf_IP4.getText();
+        if (!IPHost.isEmpty()) {
             try {
                 Object res = InetAddress.getByName(IPHost);
-                if(res instanceof Inet4Address){
+                if (res instanceof Inet4Address) {
                     //System.out.println("Valid Address!");
                     gameManager.setNickname(tf_Nickname.getText());
                     t_ConnectionWarning.setText("Waiting for connection...");
-                    
-                    
+
                     SwingWorker worker = new SwingWorker<Integer, Void>() {
-                        @Override                   
+                        @Override
                         public Integer doInBackground() throws IOException {
-                            if (!((Inet4Address) res).isReachable(3000)){
+                            if (!((Inet4Address) res).isReachable(3000)) {
                                 t_ConnectionWarning.setText("Can't connect to this IP. Try again.");
                                 return -1;
                             }
@@ -820,10 +829,10 @@ public class Swing_GUI extends javax.swing.JFrame {
                         public void done() {
                             try {
                                 int res = get();
-                                if(res==1){
-                                  gameManager.setClient(new Client(IPHost,
-                                    CommsHelper.getPort(), gameManager.getNickname(), gameManager)
-                                       );
+                                if (res == 1) {
+                                    gameManager.setClient(new Client(IPHost,
+                                            CommsHelper.getPort(), gameManager.getNickname(), gameManager)
+                                    );
                                     gameManager.setL_users(l_users);
                                     gameManager.setChatWindow(l_messages);
                                     setVisible(true);
@@ -834,18 +843,16 @@ public class Swing_GUI extends javax.swing.JFrame {
 
                         }
                     };
-                
-                worker.execute();                  
+
+                    worker.execute();
                 }
             } catch (final UnknownHostException ex) {
                 t_ConnectionWarning.setText("Invalid IP Address.");
 
             }
-        }  
-       
+        }
+
     }//GEN-LAST:event_b_ConnectActionPerformed
-
-
 
     private void mi_rulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_rulesActionPerformed
         // TODO add your handling code here:
@@ -896,8 +903,8 @@ public class Swing_GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_d_HostIPKeyTyped
 
-    
     private class InputVerifier {
+
         private String validate;
 
         public InputVerifier(String validate) {
@@ -906,28 +913,26 @@ public class Swing_GUI extends javax.swing.JFrame {
 
         public boolean verifyIPSingle(JComponent input) {
             JTextField textField = (JTextField) input;
-            
-            switch(validate){
+
+            switch (validate) {
                 case "IPSingle":
-                    /*try(){
-                        
+                /*try(){
+
                     }catch(){
-                        
+
                     }
                         return true;
                     break;*/
                 case "IPComplete":
-                    
+
                     break;
-                default:  
+                default:
                     return false;
             }
             return false;
         }
     }
-    
-   
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_Connect;
     private javax.swing.JButton b_create;

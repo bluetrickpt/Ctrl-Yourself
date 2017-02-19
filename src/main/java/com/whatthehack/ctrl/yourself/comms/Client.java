@@ -56,9 +56,8 @@ public class Client extends Thread {
 
     public void sendMessage(String contents, int code) {
         try {
-            CommsHelper.sendMessage(
-                    clientSocket, new Message(getNickname(), contents, code
-                    ));
+            Message toSend = new Message(nickname, contents, code);
+            CommsHelper.sendMessage(clientSocket, toSend);
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -76,6 +75,10 @@ public class Client extends Thread {
      */
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public void handleClosing() {
+        sendMessage("", Message.USER_LEAVING_MESSAGE);
     }
 
     private class ReadStreamThread extends Thread {

@@ -14,11 +14,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import com.whatthehack.ctrl.yourself.sound.SoundManager;
 import java.awt.Font;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextArea;
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
+import javax.swing.JTextField;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
@@ -36,10 +38,17 @@ public class GameManager {
     private Server server;
     private Client client;
 
+    //private ArrayList<String> users
     private DefaultListModel users;
     private JList userListWindow;
     private JList chatWindow;
     private DefaultListModel messages;
+
+    private JTextField inputMessageField;
+
+    public void setInputMessageField(JTextField inputMessageField) {
+        this.inputMessageField = inputMessageField;
+    }
 
     private KeyboardHandler keyboardHandler;
 
@@ -122,5 +131,32 @@ public class GameManager {
 
     public KeyboardHandler getKeyboardHandler() {
         return keyboardHandler;
+    }
+
+    public String getActiveUsersNicknames() {
+        ArrayList<String> activeUsers = Collections.list(users.elements());
+        String toReturn = "";
+        for (int i = 0; i < activeUsers.size(); ++i) {
+            toReturn += (activeUsers.get(i));
+            if (i < activeUsers.size() - 1) {
+                toReturn += Message.USERS_DELIMITER;
+            }
+        }
+        return toReturn;
+    }
+
+    public void disableMessages() {
+        inputMessageField.setText("Server shutdown. You are disconnected. Please restart client to connect again");
+        inputMessageField.setEnabled(false);
+    }
+
+    public void removeUserFromList(String nickname) {
+        ArrayList<String> activeUsers = Collections.list(users.elements());
+        for (int i = 0; i < activeUsers.size(); ++i) {
+            if (activeUsers.get(i) == nickname) {
+                users.remove(i);
+                return;
+            }
+        }
     }
 }
