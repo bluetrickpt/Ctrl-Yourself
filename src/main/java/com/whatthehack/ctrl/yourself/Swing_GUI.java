@@ -86,6 +86,7 @@ public class Swing_GUI extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         d_Login = new javax.swing.JDialog();
         p_buttons = new javax.swing.JPanel();
@@ -301,6 +302,10 @@ public class Swing_GUI extends javax.swing.JFrame {
         tf_IP1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         tf_IP1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tf_IP1.setPreferredSize(new java.awt.Dimension(36, 28));
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tf_IP1, org.jdesktop.beansbinding.ELProperty.create("${inputVerifier}"), tf_IP1, org.jdesktop.beansbinding.BeanProperty.create("inputVerifier"));
+        bindingGroup.addBinding(binding);
+
         tf_IP1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_IP1KeyTyped(evt);
@@ -557,6 +562,8 @@ public class Swing_GUI extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
         );
 
+        jScrollPane2.setAutoscrolls(true);
+
         jScrollPane2.setViewportView(l_messages);
 
         javax.swing.GroupLayout p_messagesLayout = new javax.swing.GroupLayout(p_messages);
@@ -640,6 +647,8 @@ public class Swing_GUI extends javax.swing.JFrame {
                 .addComponent(p_submitMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -925,10 +934,12 @@ public class Swing_GUI extends javax.swing.JFrame {
                     try{
                         int parseInt = Integer.parseInt(str);
                     }catch(NumberFormatException e){
+                        input.setBackground(Color.red);
                         return false;
                     }
-                    if(str.length() <= 3)
+                    if(str.length() <= 3){
                         return true;
+                    }
                     return false;
                 case "Port":
                     try{
@@ -998,5 +1009,6 @@ public class Swing_GUI extends javax.swing.JFrame {
     private javax.swing.JTextField tf_Nickname;
     private javax.swing.JTextField tf_Port;
     private javax.swing.JTextField tf_message;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

@@ -356,6 +356,9 @@
                       <Dimension value="[36, 28]"/>
                     </Property>
                   </Properties>
+                  <BindingProperties>
+                    <BindingProperty name="inputVerifier" source="tf_IP1" sourcePath="${inputVerifier}" target="tf_IP1" targetPath="inputVerifier" updateStrategy="0" immediately="false"/>
+                  </BindingProperties>
                   <Events>
                     <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tf_IP1KeyTyped"/>
                   </Events>
@@ -767,6 +770,9 @@
           </Layout>
           <SubComponents>
             <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+              <Properties>
+                <Property name="autoscrolls" type="boolean" value="true"/>
+              </Properties>
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
