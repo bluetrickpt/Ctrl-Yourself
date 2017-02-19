@@ -14,11 +14,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import com.whatthehack.ctrl.yourself.sound.SoundManager;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextArea;
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
@@ -35,26 +40,33 @@ public class GameManager {
     private String nickname;
     private Server server;
     private Client client;
+    private boolean isMuted;
 
     private DefaultListModel users;
     private JList userListWindow;
     private JList chatWindow;
     private DefaultListModel messages;
+    private JDialog challengeDialog;
+    private JLabel challengeTitle;
+    private JLabel challengeDesc;
 
     private KeyboardHandler keyboardHandler;
 
     public GameManager() throws IOException {
         Challenge.initChallengeList(defaultChallenges);
-        activeChallenges = FilesHelper.readCSVFileChallenges(challengeFile, defaultChallenges);
+        //activeChallenges = FilesHelper.readCSVFileChallenges(challengeFile, defaultChallenges);
+        activeChallenges = defaultChallenges;
         //System.out.println(activeChallenges);
 
         users = new DefaultListModel();
         messages = new DefaultListModel();
         userListWindow = new JList(users);
         chatWindow = new JList(messages);
-
+        soundManager = new SoundManager(false);
         keyboardHandler = new KeyboardHandler(this);
+    }
 
+    public void startHandlingKeyboard() {
         try {
             GlobalScreen.registerNativeHook();
         } catch (NativeHookException ex) {
@@ -122,5 +134,35 @@ public class GameManager {
 
     public KeyboardHandler getKeyboardHandler() {
         return keyboardHandler;
+    }
+
+    public void setChallengeDialog(JDialog dialog) {
+        this.challengeDialog = dialog;
+    }
+
+    public void setChallengeTitle(JLabel title) {
+        this.challengeTitle = title;
+    }
+
+    public void setChallengeDesc(JLabel desc) {
+        this.challengeDesc = desc;
+    }
+
+    public void setChallengePopup(JLabel title, JLabel desc, JDialog dialog) {
+        setChallengeTitle(title);
+        setChallengeDesc(desc);
+        setChallengeDialog(dialog);
+    }
+
+    public void launchChallenge() {
+        int currentChallenge = ThreadLocalRandom.current().nextInt(0, activeChallenges.size() - 1);
+        Challenge newChallenge = activeChallenges.get(currentChallenge);
+        this.challengeTitle.setText(newChallenge.getTitle());
+        this.challengeDesc.setText(newChallenge.getDescription());
+        this.challengeDialog.setVisible(true);
+        this.challengeDialog.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
+        System.out.println(newChallenge + "\n");
+
+        soundManager.playSound(newChallenge.getSound());
     }
 }
