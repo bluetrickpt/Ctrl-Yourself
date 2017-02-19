@@ -79,7 +79,14 @@ public class Swing_GUI extends javax.swing.JFrame {
                 System.exit(0);
             }
         };
-
+        
+        tf_IP1.setInputVerifier(new StrictInputVerifier("IP"));
+        tf_IP2.setInputVerifier(new StrictInputVerifier("IP"));
+        tf_IP2.setInputVerifier(new StrictInputVerifier("IP"));
+        tf_IP2.setInputVerifier(new StrictInputVerifier("IP"));
+        tf_Nickname.setInputVerifier(new StrictInputVerifier("NickName"));
+        tf_Port.setInputVerifier(new StrictInputVerifier("Port"));
+        
         this.addWindowListener(close_handler);
         d_Login.addWindowListener(close_handler);
         d_Login.setVisible(true);
@@ -96,6 +103,7 @@ public class Swing_GUI extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         d_Login = new javax.swing.JDialog();
         p_buttons = new javax.swing.JPanel();
@@ -308,6 +316,10 @@ public class Swing_GUI extends javax.swing.JFrame {
         tf_IP1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         tf_IP1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tf_IP1.setPreferredSize(new java.awt.Dimension(36, 28));
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tf_IP1, org.jdesktop.beansbinding.ELProperty.create("${inputVerifier}"), tf_IP1, org.jdesktop.beansbinding.BeanProperty.create("inputVerifier"));
+        bindingGroup.addBinding(binding);
+
         tf_IP1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_IP1KeyTyped(evt);
@@ -317,6 +329,10 @@ public class Swing_GUI extends javax.swing.JFrame {
         tf_IP2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         tf_IP2.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tf_IP2.setPreferredSize(new java.awt.Dimension(36, 28));
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tf_IP2, org.jdesktop.beansbinding.ELProperty.create("${inputVerifier}"), tf_IP2, org.jdesktop.beansbinding.BeanProperty.create("inputVerifier"));
+        bindingGroup.addBinding(binding);
+
         tf_IP2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_IP2KeyTyped(evt);
@@ -326,6 +342,10 @@ public class Swing_GUI extends javax.swing.JFrame {
         tf_IP3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         tf_IP3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tf_IP3.setPreferredSize(new java.awt.Dimension(36, 28));
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tf_IP3, org.jdesktop.beansbinding.ELProperty.create("${inputVerifier}"), tf_IP3, org.jdesktop.beansbinding.BeanProperty.create("inputVerifier"));
+        bindingGroup.addBinding(binding);
+
         tf_IP3.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_IP3KeyTyped(evt);
@@ -335,6 +355,10 @@ public class Swing_GUI extends javax.swing.JFrame {
         tf_IP4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         tf_IP4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tf_IP4.setPreferredSize(new java.awt.Dimension(36, 28));
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tf_IP4, org.jdesktop.beansbinding.ELProperty.create("${inputVerifier}"), tf_IP4, org.jdesktop.beansbinding.BeanProperty.create("inputVerifier"));
+        bindingGroup.addBinding(binding);
+
         tf_IP4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_IP4ActionPerformed(evt);
@@ -501,6 +525,8 @@ public class Swing_GUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ctrl-Yourself");
 
+        tf_message.setMinimumSize(new java.awt.Dimension(22, 22));
+        tf_message.setPreferredSize(new java.awt.Dimension(572, 22));
         tf_message.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_messageActionPerformed(evt);
@@ -527,14 +553,15 @@ public class Swing_GUI extends javax.swing.JFrame {
         p_submitMessageLayout.setHorizontalGroup(
             p_submitMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(p_submitMessageLayout.createSequentialGroup()
-                .addComponent(tf_message, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tf_message, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(b_sendNudes, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
+                .addComponent(b_sendNudes, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         p_submitMessageLayout.setVerticalGroup(
             p_submitMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(p_submitMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(b_sendNudes, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                .addComponent(b_sendNudes, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(tf_message, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
         );
 
@@ -639,6 +666,8 @@ public class Swing_GUI extends javax.swing.JFrame {
                 .addComponent(p_submitMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -899,6 +928,59 @@ public class Swing_GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_d_HostIPKeyTyped
 
+    private class StrictInputVerifier extends InputVerifier {
+        private String option;
+
+        public StrictInputVerifier(String option) {
+            this.option = option;
+        }
+
+        public boolean verify(JComponent input) {
+            JTextField textField = (JTextField) input;
+            String str = textField.getText();
+            switch(option){
+                case "IP":
+                    try{
+                        int parseInt = Integer.parseInt(str);
+                    }catch(NumberFormatException e){
+                        input.setBackground(Color.red);
+                        textField.setText("");
+                        return false;
+                    }
+                    if(str.length() <= 3){
+                        input.setBackground(Color.white);
+                        return true;
+                    }
+                    return false;
+                case "Port":
+                    try{
+                        int parseInt = Integer.parseInt(str);
+                    }catch(NumberFormatException e){
+                        input.setBackground(Color.red);
+                        textField.setText("");
+                        return false;
+                    }
+                    if(str.length() == 4){
+                        input.setBackground(Color.white);
+                        return true;
+                    }
+                case "NickName":
+                    if(str.length() <= 15 && str.length() >= 1){
+                        input.setBackground(Color.white);
+                        return true;
+                    }
+                    else{
+                        input.setBackground(Color.red);
+                        textField.setText("");
+                        return false;
+                    }
+                default:  
+                    return false;
+            }
+        }
+    }
+    
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_Connect;
     private javax.swing.JButton b_create;
@@ -946,5 +1028,6 @@ public class Swing_GUI extends javax.swing.JFrame {
     private javax.swing.JTextField tf_Nickname;
     private javax.swing.JTextField tf_Port;
     private javax.swing.JTextField tf_message;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
