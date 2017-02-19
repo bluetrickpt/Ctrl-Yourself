@@ -16,7 +16,9 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import javax.swing.InputVerifier;
+import javax.swing.JComponent;
+import javax.swing.JTextField;
 
 /**
  *
@@ -93,6 +95,11 @@ public class Swing_GUI extends javax.swing.JFrame {
         d_Rules = new javax.swing.JDialog();
         sp_Rules = new javax.swing.JScrollPane();
         ta_Rules = new javax.swing.JTextArea();
+        d_Challenge = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         p_submitMessage = new javax.swing.JPanel();
         tf_message = new javax.swing.JTextField();
         b_sendNudes = new javax.swing.JButton();
@@ -106,16 +113,21 @@ public class Swing_GUI extends javax.swing.JFrame {
         mb_Menu = new javax.swing.JMenuBar();
         m_file = new javax.swing.JMenu();
         mi_quit = new javax.swing.JMenuItem();
+        m_settings = new javax.swing.JMenu();
+        mi_mute = new javax.swing.JCheckBoxMenuItem();
         m_help = new javax.swing.JMenu();
         mi_rules = new javax.swing.JMenuItem();
 
         d_Login.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         d_Login.setTitle("Ctrl-Yourself");
         d_Login.setAlwaysOnTop(true);
-        d_Login.setMinimumSize(new java.awt.Dimension(777, 508));
+        d_Login.setMaximumSize(new java.awt.Dimension(446, 389));
+        d_Login.setMinimumSize(new java.awt.Dimension(446, 389));
         d_Login.setResizable(false);
 
         p_buttons.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        p_buttons.setFocusable(false);
+        p_buttons.setMinimumSize(new java.awt.Dimension(255, 92));
 
         b_create.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         b_create.setText("Create");
@@ -152,7 +164,7 @@ public class Swing_GUI extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(p_buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(b_join, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
-                    .addComponent(b_create, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE))
+                    .addComponent(b_create, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(22, 22, 22))
         );
 
@@ -228,11 +240,11 @@ public class Swing_GUI extends javax.swing.JFrame {
         d_LoginLayout.setHorizontalGroup(
             d_LoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(d_LoginLayout.createSequentialGroup()
-                .addGap(208, 208, 208)
+                .addGap(50, 50, 50)
                 .addGroup(d_LoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(p_buttons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(208, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         d_LoginLayout.setVerticalGroup(
             d_LoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,13 +252,17 @@ public class Swing_GUI extends javax.swing.JFrame {
                 .addGap(50, 50, 50)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
-                .addComponent(p_buttons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(50, 50, 50))
+                .addComponent(p_buttons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
-        d_HostIP.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         d_HostIP.setMinimumSize(new java.awt.Dimension(460, 232));
         d_HostIP.setResizable(false);
+        d_HostIP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                d_HostIPKeyTyped(evt);
+            }
+        });
 
         b_Connnect.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         b_Connnect.setText("Connect");
@@ -261,7 +277,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         t_HostIP.setText("Host IP:");
 
         tf_IP1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        tf_IP1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        tf_IP1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tf_IP1.setPreferredSize(new java.awt.Dimension(36, 28));
         tf_IP1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -270,7 +286,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         });
 
         tf_IP2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        tf_IP2.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        tf_IP2.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tf_IP2.setPreferredSize(new java.awt.Dimension(36, 28));
         tf_IP2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -279,7 +295,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         });
 
         tf_IP3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        tf_IP3.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        tf_IP3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tf_IP3.setPreferredSize(new java.awt.Dimension(36, 28));
         tf_IP3.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -288,7 +304,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         });
 
         tf_IP4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        tf_IP4.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        tf_IP4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tf_IP4.setPreferredSize(new java.awt.Dimension(36, 28));
         tf_IP4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -409,6 +425,55 @@ public class Swing_GUI extends javax.swing.JFrame {
             .addComponent(sp_Rules, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
 
+        jLabel1.setFont(new java.awt.Font("Monospaced", 1, 48)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("EVENT TITLE");
+
+        jLabel2.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Event description");
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(100, 100, 100)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(100, 100, 100))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
+        );
+
+        javax.swing.GroupLayout d_ChallengeLayout = new javax.swing.GroupLayout(d_Challenge.getContentPane());
+        d_Challenge.getContentPane().setLayout(d_ChallengeLayout);
+        d_ChallengeLayout.setHorizontalGroup(
+            d_ChallengeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        d_ChallengeLayout.setVerticalGroup(
+            d_ChallengeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ctrl-Yourself");
 
@@ -423,6 +488,7 @@ public class Swing_GUI extends javax.swing.JFrame {
             }
         });
 
+        b_sendNudes.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         b_sendNudes.setText("Send");
         b_sendNudes.setFocusPainted(false);
         b_sendNudes.setFocusable(false);
@@ -460,7 +526,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         );
         chatUsersOnlineLayout.setVerticalGroup(
             chatUsersOnlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
         );
 
         jScrollPane2.setViewportView(l_messages);
@@ -502,6 +568,20 @@ public class Swing_GUI extends javax.swing.JFrame {
         m_file.add(mi_quit);
 
         mb_Menu.add(m_file);
+
+        m_settings.setText("Settings");
+
+        mi_mute.setText("Mute");
+        mi_mute.setFocusable(true);
+        mi_mute.setNextFocusableComponent(m_settings);
+        mi_mute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_muteActionPerformed(evt);
+            }
+        });
+        m_settings.add(mi_mute);
+
+        mb_Menu.add(m_settings);
 
         m_help.setText("Help");
 
@@ -681,11 +761,12 @@ public class Swing_GUI extends javax.swing.JFrame {
         if (!Character.isDigit(evt.getKeyChar()) || tf_IP4.getText().length() == 3) {
             evt.consume();
         }
-        if (tf_IP4.getText().length() == 2 && Character.isDigit(evt.getKeyChar())) {
+        if (tf_IP4.getText().length() == 0 && Character.isDigit(evt.getKeyChar())) {
             b_Connnect.setEnabled(true);
         }
     }//GEN-LAST:event_tf_IP4KeyTyped
-
+    
+    
     private void b_ConnnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ConnnectActionPerformed
         // TODO add your handling code here:
         d_HostIP.setVisible(false);
@@ -728,23 +809,86 @@ public class Swing_GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_messageActionPerformed
 
+    private void mi_muteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_muteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mi_muteActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        d_Challenge.setVisible(false);
+        setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void d_HostIPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_d_HostIPKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_d_HostIPKeyTyped
+
+    
+    private class InputVerifier {
+        private String validate;
+
+        public InputVerifier(String validate) {
+            this.validate = validate;
+        }
+
+        public boolean verifyIPSingle(JComponent input) {
+            JTextField textField = (JTextField) input;
+            
+            switch(validate){
+                case "IPSingle":
+                    /*try(){
+                        
+                    }catch(){
+                        
+                    }
+                        return true;
+                    break;*/
+                case "IPComplete":
+                    
+                    break;
+                default:  
+                    return false;
+            }
+            return false;
+        }
+    }
+    
+    public static boolean isInteger(String s, int radix) {
+    if(s.isEmpty()) return false;
+    for(int i = 0; i < s.length(); i++) {
+        if(i == 0 && s.charAt(i) == '-') {
+            if(s.length() == 1) return false;
+            else continue;
+        }
+        if(Character.digit(s.charAt(i),radix) < 0) return false;
+    }
+    return true;
+}
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_Connnect;
     private javax.swing.JButton b_create;
     private javax.swing.JButton b_join;
     private javax.swing.JButton b_sendNudes;
     private javax.swing.JPanel chatUsersOnline;
+    private javax.swing.JDialog d_Challenge;
     private javax.swing.JDialog d_HostIP;
     private javax.swing.JDialog d_Login;
     private javax.swing.JDialog d_Rules;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<String> l_messages;
     private javax.swing.JList<String> l_users;
     private javax.swing.JMenu m_file;
     private javax.swing.JMenu m_help;
+    private javax.swing.JMenu m_settings;
     private javax.swing.JMenuBar mb_Menu;
+    private javax.swing.JCheckBoxMenuItem mi_mute;
     private javax.swing.JMenuItem mi_quit;
     private javax.swing.JMenuItem mi_rules;
     private javax.swing.JPanel p_HostIP;
