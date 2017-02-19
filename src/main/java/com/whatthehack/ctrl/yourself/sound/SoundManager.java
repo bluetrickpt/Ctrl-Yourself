@@ -29,7 +29,7 @@ public class SoundManager {
     private static final String[] soundFiles
             = {"cookie.wav", "copy.wav", "i_cant_believe.wav", "illuminati.wav",
                 "laugh.wav", "nope.wav", "profanity.wav", "what_a_save.wav",
-                "wrong.wav", "yeah_baby_yeah.wav"};
+                "wrong.wav", "yeah_baby_yeah.wav", "hello_gotham.wav", "membrane.wav"};
 
     public static String[] getSoundFiles() {
         return soundFiles;
