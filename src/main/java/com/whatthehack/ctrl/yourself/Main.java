@@ -24,6 +24,7 @@ public class Main extends JFrame {
 
         GameManager gameManager = new GameManager();
         startGUI(gameManager);
+
 //        SwingUtilities.invokeLater(new Runnable() {
 //            public void run() {
 //                //new NativeHookDemo();
@@ -52,7 +53,6 @@ public class Main extends JFrame {
 //        });
 //
 //        System.in.read();
-
     }
 
     public static void startGUI(GameManager gameManager) {

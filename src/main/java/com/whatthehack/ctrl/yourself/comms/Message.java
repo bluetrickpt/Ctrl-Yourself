@@ -6,6 +6,7 @@
 package com.whatthehack.ctrl.yourself.comms;
 
 import com.whatthehack.ctrl.yourself.game.GameManager;
+import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,10 +22,15 @@ public class Message {
     private int code;
 
     //TODO: Implement codes
-    public static final int SYSTEM_MESSAGE = 0;
-    public static final int USER_MESSAGE = 1;
-    public static final int CHALLENGE_MESSAGE = 2;
-    public static final int NEW_MEMBER_MESSAGE = 3;
+    public static final int SYSTEM_MESSAGE = 1;
+    public static final int USER_MESSAGE = 2;
+    public static final int CHALLENGE_MESSAGE = 3;
+    public static final int NEW_MEMBER_MESSAGE = 4;
+    public static final int UPDATE_USER_LIST_MESSAGE = 5;
+    public static final int SERVER_CLOSING_MESSAGE = 6;
+    public static final int USER_LEAVING_MESSAGE = 7;
+
+    public static final String USERS_DELIMITER = "&&";
 
     private static final String SYSTEM_FONT_SIZE = "20";
     private static final String USER_FONT_SIZE = "16";
@@ -43,6 +49,7 @@ public class Message {
         //parsedObject.
         this.nickname = jsonObject.get("nickname").toString();
         this.content = jsonObject.get("content").toString();
+        //System.out.println(jsonObject.toString());
         this.code = Integer.parseInt(jsonObject.get("code").toString());
     }
 
@@ -84,7 +91,7 @@ public class Message {
 
     @Override
     public String toString() {
-        return new String(nickname + ": " + content + " (" + code + ")");
+        return (nickname + ": " + content + " (" + code + ")");
     }
 
     /**
@@ -112,10 +119,20 @@ public class Message {
                 break;
             case USER_MESSAGE:
                 result = "<html><b><span style=\"font-size:" + USER_FONT_SIZE + ";\">" + receivedMessage.getNickname() + ": " + receivedMessage.getContent() + "</span></b></html>";
-                ;
+
                 break;
             case CHALLENGE_MESSAGE:
                 //TODO
+                break;
+            case UPDATE_USER_LIST_MESSAGE:
+                initUsersFromString(receivedMessage.getContent(), gameManager);
+                break;
+            case SERVER_CLOSING_MESSAGE:
+                //TODO
+                gameManager.disableMessages();
+                break;
+            case USER_LEAVING_MESSAGE:
+                result = "<html><b><span style=\"font-size:" + SYSTEM_FONT_SIZE + ";\">*** " + clientLeavingString(receivedMessage.getNickname()) + " ***</span></b></html>";
                 break;
             default:
                 throw new RuntimeException("Invalid entry");
@@ -125,5 +142,20 @@ public class Message {
 
     public static String getWelcomeString(String nickname) {
         return (nickname + " joined the chat");
+    }
+
+    public static String serverClosingString() {
+        return "Server shutting down. You will be disconnected";
+    }
+
+    public static String clientLeavingString(String nick) {
+        return "User " + nick + " left";
+    }
+
+    public static void initUsersFromString(String jsonArrayUsers, GameManager gameManager) {
+        String[] users = jsonArrayUsers.split(USERS_DELIMITER);
+        for (int i = 0; i < users.length; ++i) {
+            gameManager.addUser(users[i]);
+        }
     }
 }
