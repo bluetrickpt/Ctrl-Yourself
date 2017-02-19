@@ -122,7 +122,7 @@ public class Message {
 
                 break;
             case CHALLENGE_MESSAGE:
-                //TODO
+                result = "<html><b><span style=\"color:red; font-size:" + USER_FONT_SIZE + ";\">Heads up! " + receivedMessage.getContent() + "</span></b></html>";
                 break;
             case UPDATE_USER_LIST_MESSAGE:
                 initUsersFromString(receivedMessage.getContent(), gameManager);

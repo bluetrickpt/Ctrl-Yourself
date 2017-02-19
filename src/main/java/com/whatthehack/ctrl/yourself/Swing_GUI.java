@@ -892,6 +892,7 @@ public class Swing_GUI extends javax.swing.JFrame {
 
     private void mi_muteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_muteActionPerformed
         // TODO add your handling code here:
+        gameManager.setMute(mi_mute.getState());
     }//GEN-LAST:event_mi_muteActionPerformed
 
     private void d_HostIPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_d_HostIPKeyTyped
