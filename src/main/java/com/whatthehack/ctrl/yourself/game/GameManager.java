@@ -200,6 +200,11 @@ public class GameManager {
         System.out.println(newChallenge + "\n");
 
         soundManager.playSound(newChallenge.getSound());
+        String challengeMessage = client.getNickname() + " got challenged to " + newChallenge.getDescription();
+        client.sendMessage(challengeMessage, Message.CHALLENGE_MESSAGE);
+    }
 
+    public void setMute(boolean mute) {
+        soundManager.setMuted(mute);
     }
 }
