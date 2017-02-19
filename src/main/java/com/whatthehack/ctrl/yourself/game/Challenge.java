@@ -5,7 +5,16 @@
  */
 package com.whatthehack.ctrl.yourself.game;
 
+import com.whatthehack.ctrl.yourself.helpers.FilesHelper;
+import com.whatthehack.ctrl.yourself.sound.SoundManager;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,6 +29,40 @@ public class Challenge {
         this.title = title;
         this.description = description;
         this.sound = sound;
+        if (this.sound == null || this.sound.isEmpty()) {
+            String[] allSounds = SoundManager.getSoundFiles();
+            int randomInt = ThreadLocalRandom.current().nextInt(0, allSounds.length - 1 + 1);
+            this.sound = allSounds[randomInt];
+        }
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSound() {
+        return sound;
+    }
+
+    public void setSound(String sound) {
+        this.sound = sound;
+    }
+
+    @Override
+    public String toString() {
+        return (title + " " + description + " " + sound);
     }
 
     public static void initChallengeList(ArrayList<Challenge> defaultChallenges) {
@@ -71,34 +114,4 @@ public class Challenge {
         defaultChallenges.add(new Challenge("What The Hack?", "Get a virutal cookie from the dev team!", ""));
 
     }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getSound() {
-        return sound;
-    }
-
-    public void setSound(String sound) {
-        this.sound = sound;
-    }
-
-    @Override
-    public String toString() {
-        return (title + " " + description + " " + sound);
-    }
-
 }

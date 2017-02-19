@@ -44,8 +44,7 @@ public class GameManager {
     private KeyboardHandler keyboardHandler;
 
     public GameManager() throws IOException {
-        defaultChallenges.add(new Challenge("yellow", "Sing yellow from coldplay", "yellowKaraoke.wav"));
-        defaultChallenges.add(new Challenge("yellow", "Sing toy", "toyKaraoke.wav"));
+        Challenge.initChallengeList(defaultChallenges);
         activeChallenges = FilesHelper.readCSVFileChallenges(challengeFile, defaultChallenges);
         //System.out.println(activeChallenges);
 
