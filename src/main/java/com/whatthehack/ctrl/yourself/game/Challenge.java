@@ -81,7 +81,7 @@ public class Challenge {
         defaultChallenges.add(new Challenge("I'm a creep.", "Creep up on someone and give them a scare! Legal notice: We take no responsibility on the ensuing violence.", null));
         defaultChallenges.add(new Challenge("Dvorak’idding me?", "Change your keyboard layout to Dvorak for 10min.", null));
         // ^ 20
-        defaultChallenges.add(new Challenge("Usain in the Membrane!", "Run a couple of times around the office.", null));
+        defaultChallenges.add(new Challenge("Usain in the Membrane!", "Run a couple of times around the office.", "membrane.wav"));
         defaultChallenges.add(new Challenge("Points for trying.", "Sing some a Happy Birthday, even if it’s not their birthday. Especially if it’s not their birthday.", null));
         defaultChallenges.add(new Challenge("Leg stretch.", "Stretch while standing.", null));
         defaultChallenges.add(new Challenge("Making enemies.", "Choose a target and turn their monitor off.", null));
@@ -106,12 +106,12 @@ public class Challenge {
         defaultChallenges.add(new Challenge("Facebook roulette", "Have a colleague send an awkward message to a random person in your Facebook friend list.", null));
         defaultChallenges.add(new Challenge("What The Hack?", "Get a virutal cookie from the dev team!", null));
         defaultChallenges.add(new Challenge("Potty mouth!", "Shout a random swear word!", null));
-        defaultChallenges.add(new Challenge("Hello?", "Take off your shoe and use it as a cellphone to talk to a colleague.", "profanity.wav"));
+        defaultChallenges.add(new Challenge("Hello?", "Take off your shoe and use it as a cellphone to talk to a colleague.", "hello_gotham.wav"));
         defaultChallenges.add(new Challenge("Small talk.", "Talk to a colleague about the current weather.", "throat_clear.wav"));
         defaultChallenges.add(new Challenge("Bonnie and Clyde.", "Choose an ally and steal someone's item.", null));
         defaultChallenges.add(new Challenge("Left is right.", "Change your mouse left-click to right-click and vice-versa.", null));
         defaultChallenges.add(new Challenge("Old school.", "Stop using your mouse for 10 minutes.", null));
-        defaultChallenges.add(new Challenge("Hello, Batsy!", "Turn your image display upside down until someone else hits a key combo.", null));
+        defaultChallenges.add(new Challenge("Hello, Batsy!", "Turn your image display upside down until someone else hits a key combo.", "hello_gotham.wav"));
         defaultChallenges.add(new Challenge("Well, that's annoying.", "Do annoying sounds (like clearing your throat or tapping on the table) until someone tells you to stop.", "throat_clear.wav"));
         // ^ 50
         // defaultChallenges.add(new Challenge("", "", null));
