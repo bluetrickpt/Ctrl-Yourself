@@ -5,7 +5,17 @@
  */
 package com.whatthehack.ctrl.yourself;
 
+import com.whatthehack.ctrl.yourself.comms.Client;
+import com.whatthehack.ctrl.yourself.comms.Server;
+import com.whatthehack.ctrl.yourself.game.GameManager;
+import com.whatthehack.ctrl.yourself.helpers.CommsHelper;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,24 +26,37 @@ public class Swing_GUI extends javax.swing.JFrame {
     /**
      * Creates new form Swing_GUI
      */
-    Boolean isServer;
-    short port;
-    Boolean portValidated;
-    Boolean nickValidated;
-    Boolean ipValidated;
+    private Boolean portValidated;
+    private Boolean nickValidated;
+    private Boolean ipValidated;
 
-    public Swing_GUI() {
+    private GameManager gameManager;
 
-        isServer = false;
+    public Swing_GUI(GameManager gameManager) {
+
         portValidated = false;
         nickValidated = false;
         ipValidated = false;
 
+        this.gameManager = gameManager;
+
         initComponents();
 
-        b_startStop.setEnabled(false);
-        d_Login.setVisible(true);
+        java.awt.event.WindowAdapter close_handler = new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                Server server = gameManager.getServer();
+                if (server != null) {
+                    //server.sendShutdownMessage(); //TODO
+                    dispose();
+                    System.exit(0);
+                }
+            }
+        };
 
+        this.addWindowListener(close_handler);
+        d_Login.addWindowListener(close_handler);
+        d_Login.setVisible(true);
     }
 
     /**
@@ -72,11 +95,10 @@ public class Swing_GUI extends javax.swing.JFrame {
         p_submitMessage = new javax.swing.JPanel();
         tf_message = new javax.swing.JTextField();
         b_sendNudes = new javax.swing.JButton();
-        b_startStop = new javax.swing.JButton();
         p_chat = new javax.swing.JPanel();
         chatUsersOnline = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        ta_users = new javax.swing.JTextArea();
         p_messages = new javax.swing.JPanel();
         sp_messages = new javax.swing.JScrollPane();
         ta_messages = new javax.swing.JTextArea();
@@ -87,7 +109,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         mi_rules = new javax.swing.JMenuItem();
 
         d_Login.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        d_Login.setTitle("Ctrl + Yourself");
+        d_Login.setTitle("Ctrl-Yourself");
         d_Login.setAlwaysOnTop(true);
         d_Login.setLocationByPlatform(true);
         d_Login.setMinimumSize(new java.awt.Dimension(777, 508));
@@ -389,19 +411,26 @@ public class Swing_GUI extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Ctrl + Yourself");
+        setTitle("Ctrl-Yourself");
 
-        b_sendNudes.setText("Send (nudes)");
-        b_sendNudes.addActionListener(new java.awt.event.ActionListener() {
+        tf_message.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b_sendNudesActionPerformed(evt);
+                tf_messageActionPerformed(evt);
+            }
+        });
+        tf_message.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tf_messageKeyPressed(evt);
             }
         });
 
-        b_startStop.setText("Start");
-        b_startStop.addActionListener(new java.awt.event.ActionListener() {
+        b_sendNudes.setText("Send");
+        b_sendNudes.setActionCommand("Send");
+        b_sendNudes.setFocusPainted(false);
+        b_sendNudes.setFocusable(false);
+        b_sendNudes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b_startStopActionPerformed(evt);
+                b_sendNudesActionPerformed(evt);
             }
         });
 
@@ -410,8 +439,7 @@ public class Swing_GUI extends javax.swing.JFrame {
         p_submitMessageLayout.setHorizontalGroup(
             p_submitMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(p_submitMessageLayout.createSequentialGroup()
-                .addComponent(b_startStop)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
                 .addComponent(tf_message)
                 .addGap(18, 18, 18)
                 .addComponent(b_sendNudes, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -420,17 +448,17 @@ public class Swing_GUI extends javax.swing.JFrame {
         p_submitMessageLayout.setVerticalGroup(
             p_submitMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(b_sendNudes, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-            .addComponent(b_startStop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(tf_message)
         );
 
         jScrollPane2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jTextArea2.setEditable(false);
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jTextArea2.setFocusable(false);
-        jScrollPane2.setViewportView(jTextArea2);
+        ta_users.setEditable(false);
+        ta_users.setColumns(20);
+        ta_users.setRows(5);
+        ta_users.setFocusable(false);
+        jScrollPane2.setViewportView(ta_users);
+        ta_users.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout chatUsersOnlineLayout = new javax.swing.GroupLayout(chatUsersOnline);
         chatUsersOnline.setLayout(chatUsersOnlineLayout);
@@ -448,7 +476,6 @@ public class Swing_GUI extends javax.swing.JFrame {
         ta_messages.setEditable(false);
         ta_messages.setColumns(20);
         ta_messages.setRows(5);
-        ta_messages.setText("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\nbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\ncccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\nddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\ne\nf\ng\nh\ni\nj\nk\nl\nm\nn\no\np\nq\nr\ns\nt\nu\nv\nw\nx\ny\nz\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9");
         sp_messages.setViewportView(ta_messages);
 
         javax.swing.GroupLayout p_messagesLayout = new javax.swing.GroupLayout(p_messages);
@@ -573,34 +600,40 @@ public class Swing_GUI extends javax.swing.JFrame {
 
     private void b_joinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_joinActionPerformed
         // TODO add your handling code here:
-        b_startStop.setEnabled(false);
-        b_startStop.setText("");
         d_Login.setVisible(false);
         d_HostIP.setVisible(true);
     }//GEN-LAST:event_b_joinActionPerformed
 
     private void b_sendNudesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_sendNudesActionPerformed
         // TODO add your handling code here:
+        String toSendMessage = tf_message.getText();
+        if (!toSendMessage.isEmpty()) {
+            gameManager.getClient().sendMessage(toSendMessage);
+            tf_message.setText("");
+        }
+        tf_message.requestFocusInWindow();
     }//GEN-LAST:event_b_sendNudesActionPerformed
 
-    private void b_startStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_startStopActionPerformed
-        // START/STOP
-        if ("Start".equals(b_startStop.getText())) {
-            b_startStop.setText("Stop");
-        } else {
-            setVisible(false);
-            d_Login.setVisible(true);
-            b_startStop.setText("Start");
-        }
-
-    }//GEN-LAST:event_b_startStopActionPerformed
-
     private void b_createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_createActionPerformed
-        // TODO add your handling code here:
-        isServer = true;
-        b_startStop.setEnabled(true);
-        d_Login.setVisible(false);
-        setVisible(true);
+        try {
+            //isServer = true;
+            d_Login.setVisible(false);
+
+            gameManager.setNickname(tf_Nickname.getText());
+            CommsHelper.setPort((short) Integer.parseInt(tf_Port.getText()));
+            gameManager.setServer(new Server(gameManager, CommsHelper.getPort()));
+            gameManager.setClient(new Client(
+                    InetAddress.getLocalHost().getHostAddress(),
+                    CommsHelper.getPort(), gameManager.getNickname(),
+                    gameManager)
+            );
+            gameManager.setTa_users(ta_users);
+            gameManager.setChatWindow(ta_messages);
+
+            setVisible(true);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Swing_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_b_createActionPerformed
 
     private void tf_PortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_PortActionPerformed
@@ -692,19 +725,33 @@ public class Swing_GUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tf_NicknameActionPerformed
 
+    private void tf_messageKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_messageKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String toSendMessage = tf_message.getText();
+            if (!toSendMessage.isEmpty()) {
+                gameManager.getClient().sendMessage(toSendMessage);
+                tf_message.setText("");
+            }
+            tf_message.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_tf_messageKeyPressed
+
+    private void tf_messageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_messageActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_messageActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_Connnect;
     private javax.swing.JButton b_create;
     private javax.swing.JButton b_join;
     private javax.swing.JButton b_sendNudes;
-    private javax.swing.JButton b_startStop;
     private javax.swing.JPanel chatUsersOnline;
     private javax.swing.JDialog d_HostIP;
     private javax.swing.JDialog d_Login;
     private javax.swing.JDialog d_Rules;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JMenu m_file;
     private javax.swing.JMenu m_help;
     private javax.swing.JMenuBar mb_Menu;
@@ -726,6 +773,7 @@ public class Swing_GUI extends javax.swing.JFrame {
     private javax.swing.JLabel t_point3;
     private javax.swing.JTextArea ta_Rules;
     private javax.swing.JTextArea ta_messages;
+    private javax.swing.JTextArea ta_users;
     private javax.swing.JTextField tf_IP1;
     private javax.swing.JTextField tf_IP2;
     private javax.swing.JTextField tf_IP3;

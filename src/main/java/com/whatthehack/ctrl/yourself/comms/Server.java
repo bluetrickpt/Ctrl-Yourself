@@ -5,6 +5,7 @@
  */
 package com.whatthehack.ctrl.yourself.comms;
 
+import com.whatthehack.ctrl.yourself.game.GameManager;
 import com.whatthehack.ctrl.yourself.helpers.CommsHelper;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,10 +26,12 @@ public class Server extends Thread {
 
     private HashMap<Socket, String> clientSockets2Nicknames;
     private ServerSocket acceptClientSocket;
+    private GameManager gameManager;
 
-    public Server(short port) {
+    public Server(GameManager gameManager, short port) {
         super();
         clientSockets2Nicknames = new HashMap<Socket, String>();
+        this.gameManager = gameManager;
         start();
     }
 
@@ -71,6 +74,7 @@ public class Server extends Thread {
 
                 String clientNick = clientMsg.getNickname();
                 clientSockets2Nicknames.put(clientSocket, clientNick);
+                gameManager.addUser(clientNick);
                 //System.out.println(clientSockets2Nicknames.get(clientSocket));
 
                 //"Broadcast" welcome message

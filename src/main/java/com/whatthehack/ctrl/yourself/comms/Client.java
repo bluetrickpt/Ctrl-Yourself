@@ -5,6 +5,7 @@
  */
 package com.whatthehack.ctrl.yourself.comms;
 
+import com.whatthehack.ctrl.yourself.game.GameManager;
 import com.whatthehack.ctrl.yourself.helpers.CommsHelper;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -16,6 +17,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextArea;
 import org.json.simple.parser.ParseException;
 
 /**
@@ -28,14 +30,15 @@ public class Client extends Thread {
     private String server_ip;
     private DatagramSocket socket = null;
     private String nickname = "";
-    Socket clientSocket;
+    private Socket clientSocket;
+    private GameManager gameManager;
 
-    public Client(String server_ip, short port, String nickname) {
+    public Client(String server_ip, short port, String nickname, GameManager gameManager) {
         super();
         this.socket_port = port;
         this.server_ip = server_ip;
         this.nickname = nickname;
-
+        this.gameManager = gameManager;
         start();
     }
 
@@ -85,7 +88,8 @@ public class Client extends Thread {
         public void run() {
             while (true) {
                 try {
-                    System.out.println(CommsHelper.receiveMessage(socket).toString());
+                    //System.out.println(CommsHelper.receiveMessage(socket).toString());
+                    gameManager.updateChatWindow(CommsHelper.receiveMessage(socket).toString());
                 } catch (ParseException ex) {
                     Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {

@@ -1,4 +1,5 @@
 package com.whatthehack.ctrl.yourself;
+
 import com.whatthehack.ctrl.yourself.comms.Client;
 import com.whatthehack.ctrl.yourself.helpers.CommsHelper;
 import com.whatthehack.ctrl.yourself.comms.Server;
@@ -20,7 +21,9 @@ public class Main extends JFrame {
      *
      */
     public static void main(String[] args) throws IOException {
-        //       startGUI();
+
+        GameManager gameManager = new GameManager();
+        startGUI(gameManager);
 //        SwingUtilities.invokeLater(new Runnable() {
 //            public void run() {
 //                //new NativeHookDemo();
@@ -49,10 +52,10 @@ public class Main extends JFrame {
 //        });
 //
 //        System.in.read();
-        GameManager gameManager = new GameManager();
+
     }
 
-    public static void startGUI() {
+    public static void startGUI(GameManager gameManager) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -80,7 +83,7 @@ public class Main extends JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Swing_GUI().setVisible(false);
+                new Swing_GUI(gameManager).setVisible(false);
             }
         });
     }

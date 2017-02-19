@@ -1,4 +1,4 @@
-package keyboard;
+package com.whatthehack.ctrl.yourself.helpers;
 
 import org.jnativehook.NativeInputEvent;
 import org.jnativehook.keyboard.NativeKeyEvent;

@@ -18,6 +18,13 @@ public class Message {
     private String nickname;
     private String content;
 
+    private int code;
+
+    //TODO: Implement codes
+    private static final int SYSTEM_MESSAGE = 0;
+    private static final int USER_MESSAGE = 1;
+    private static final int CHALLENGE_MESSAGE = 1;
+
     public Message(String nickname, String content) {
         this.nickname = nickname;
         this.content = content;
