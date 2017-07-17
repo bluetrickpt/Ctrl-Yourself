@@ -83,7 +83,7 @@ public class Challenge {
         defaultChallenges.add(new Challenge("Dvorak’idding me?", "Change your keyboard layout to Dvorak for 10min.", null));
         // ^ 20
         defaultChallenges.add(new Challenge("Usain in the Membrane!", "Run a couple of times around the office.", "membrane.wav"));
-        defaultChallenges.add(new Challenge("Points for trying.", "Sing some a Happy Birthday, even if it’s not their birthday. Especially if it’s not their birthday.", null));
+        defaultChallenges.add(new Challenge("Points for trying.", "Wish someone a Happy Birthday, even if it’s not their birthday. Especially if it’s not their birthday.", null));
         defaultChallenges.add(new Challenge("Leg stretch.", "Stretch while standing.", null));
         defaultChallenges.add(new Challenge("Making enemies.", "Choose a target and turn their monitor off.", null));
         defaultChallenges.add(new Challenge("Making more enemies.", "Choose a target and disable their mouse.", null));
